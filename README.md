@@ -2,6 +2,8 @@
 
 ## Ideas!!!
 
+Let's get this party started! :)
+
 ## Suggested Division of Labor
 
 **Organizing the division of work:**
