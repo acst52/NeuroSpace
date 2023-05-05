@@ -1,24 +1,38 @@
 // USER MODEL IN PROGRESS. HAVE BASE BELOW - WILL NEED TO ADD TO SCHEMA
 
-const { Schema, model } = require('mongoose');
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
+const Order = require('./Order');
 
 const userSchema = new Schema(
   {
-    username: {
+    firstName: {
       type: String,
       required: true,
-      unique: true,
+      trim: true,
     },
+    lastName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    // username: {
+    //   type: String,
+    //   required: true,
+    //   unique: true,
+    // },
     email: {
       type: String,
       required: true,
       unique: true,
-      match: [/.+@.+\..+/, 'Must use a valid email address'],
+      match: [/.+@.+\..+/, 'Must use a valid email address!'],
     },
     password: {
       type: String,
       required: true,
+      minlength: 8, // set up pw validation & error msg***
     },
   },
   // set this to use virtual below
@@ -26,6 +40,7 @@ const userSchema = new Schema(
     toJSON: {
       virtuals: true,
     },
+    orders: [Order.schema],
   }
 );
 
@@ -39,11 +54,11 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-// custom method to compare and validate password for logging in - THIS IS FROM HUNGRY-SHARKS PROJECT REPO***
+// custom method to compare incoming pw w hashed pw, validate for logging in
 userSchema.methods.isCorrectPassword = async function (password) {
-  return bcrypt.compare(password, this.password);
+  return await bcrypt.compare(password, this.password);
 };
 
-const User = model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;
