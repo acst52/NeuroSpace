@@ -1,12 +1,28 @@
- 
+ * {
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+ }
 .lightMode {
   background-color: #e4e5f1;
 }
 .darkMode {
   background-color: #32292F;
 }
+.toggleButton {
+  background-color: #e4e5f1;
+  margin-top: 20px;
+  margin-left:10px;
+  border-style: none;
+  padding:0%;
+  height:50px;
+  width: 50px;
+  border-radius:50%
+}
 .logo {
-  width: 350px;
+  width: 300px;
+}
+.sunIcon, .moonIcon {
+  width:50px;
+  border-radius: 50%;
 }
 .navSection,
 .logoSection {
