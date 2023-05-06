@@ -3,9 +3,11 @@
  }
 .lightMode {
   background-color: #e4e5f1;
+  color:#32292F;
 }
 .darkMode {
   background-color: #32292F;
+  color:#f0f7f4;
 }
 .toggleButton {
   background-color: #e4e5f1;
@@ -37,6 +39,13 @@
   padding: 1%;
   border-radius: 5%;
   height: fit-content;
+}
+button:hover {
+  background-color:red;
+}
+.btnLink {
+  text-decoration: none;
+  color:#f0f7f4;
 }
 @media screen and (min-width: 769px) {
   .header {

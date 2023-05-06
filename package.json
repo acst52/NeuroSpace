@@ -28,7 +28,8 @@
     "graphql": "^16.6.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.1.0",
-    "react-google-font-loader": "^1.1.0"
+    "react-google-font-loader": "^1.1.0",
+    "react-router-dom": "^6.11.1"
   },
   "devDependencies": {
     "eslint": "^8.2.0",
