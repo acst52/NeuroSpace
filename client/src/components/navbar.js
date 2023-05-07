@@ -37,7 +37,7 @@ function Navbar() {
       </section>
         <section className="navSection">
           <button className="navButton">
-            <Link to="/" className ='btnLink'>MAIN</Link>
+            <Link to="/" className ='btnLink'>SEARCH</Link>
           </button>
           <button className="navButton">DASHBOARD</button>
           <button className="navButton">
