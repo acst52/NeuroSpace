@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
 const Order = require('./Order');
+const Schedule = require('./Schedule');
 
 const userSchema = new Schema(
   {
@@ -18,11 +19,6 @@ const userSchema = new Schema(
       required: true,
       trim: true,
     },
-    // username: {
-    //   type: String,
-    //   required: true,
-    //   unique: true,
-    // },
     email: {
       type: String,
       required: true,
@@ -34,13 +30,31 @@ const userSchema = new Schema(
       required: true,
       minlength: 8, // set up pw validation & error msg***
     },
+    schedules: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Schedule',
+      },
+    ],
+    orders: [Order.schema],
+    donations: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Donation',
+      },
+    ],
+    messages: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Message',
+      },
+    ],
   },
   // set this to use virtual below
   {
     toJSON: {
       virtuals: true,
     },
-    orders: [Order.schema],
   }
 );
 

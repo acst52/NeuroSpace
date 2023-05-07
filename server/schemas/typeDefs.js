@@ -30,6 +30,21 @@ const typeDefs = gql`
     name: String!
   }
 
+  type Schedule {
+    _id: ID!
+    weekStartDate: String!
+    events: [Event]!
+    owner: User!
+  }
+
+  type Event {
+    title: String
+    description: String
+    startDate: String
+    endDate: String
+    attendees: [User]!
+  }
+
   type Message {
     _id: ID!
     sender: User!
@@ -59,6 +74,8 @@ const typeDefs = gql`
     resources(category: ID, title: String): [Resource]
     resource(_id: ID!): Resource
     user: User
+    schedules: [Schedule]
+    schedule(_id: ID!): Schedule
     messages: [Message]
     order(_id: ID!): Order
     checkout(products: [ID]!): Checkout
@@ -80,6 +97,27 @@ const typeDefs = gql`
     ): User
     updateProduct(_id: ID!, quantity: Int!): Product
     login(email: String!, password: String!): Auth
+    createSchedule(weekStartDate: String!): Schedule
+    updateSchedule(_id: ID!, weekStartDate: String): Schedule
+    deleteSchedule(_id: ID!): Schedule
+    createEvent(
+      scheduleId: ID!
+      title: String
+      description: String
+      startDate: String
+      endDate: String
+    ): Event
+    updateEvent(
+      scheduleId: ID!
+      eventId: ID!
+      title: String
+      description: String
+      startDate: String
+      endDate: String
+    ): Event
+    deleteEvent(scheduleId: ID!, eventId: ID!): Event
+    addUserToEvent(scheduleId: ID!, eventId: ID!, userId: ID!): Event
+    removeUserFromEvent(scheduleId: ID!, eventId: ID!, userId: ID!): Event
   }
 
   extend type Mutation {
