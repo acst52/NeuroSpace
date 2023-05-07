@@ -19,20 +19,20 @@ app.use(express.urlencoded({ extended: true })); // true or false??
 app.use(express.json());
 
 // Serve static files from the React app in production ***OR - SEE BELOW***
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client/build')));
-}
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static(path.join(__dirname, 'client/build')));
+// }
 // ***OR***
 // Serve static assets
-// app.use('/images', express.static(path.join(__dirname, '../client/images')));
+app.use('/images', express.static(path.join(__dirname, '../client/images')));
 
 // DEFINE API ROUTES HERE!!!
 // Example: app.use('/api/users', usersRouter);
 
 // Catch-all route to serve the React app for any other request
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html')); // or from class notes, '../client/build/index.html'
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, '../client/build/index.html')); // or from class notes, '../client/build/index.html'
+// });
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async (typeDefs, resolvers) => {
