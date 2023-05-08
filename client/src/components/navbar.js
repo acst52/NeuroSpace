@@ -39,7 +39,9 @@ function Navbar() {
           <button className="navButton">
             <Link to="/" className ='btnLink'>SEARCH</Link>
           </button>
-          <button className="navButton">DASHBOARD</button>
+          <button className="navButton">
+          <Link to="/dashboard" className ='btnLink'>DASHBOARD</Link>
+          </button>
           <button className="navButton">
             <Link to="/login" className ='btnLink'>LOGIN</Link>
           </button>
