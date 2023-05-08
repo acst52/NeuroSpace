@@ -30,13 +30,25 @@ const userSchema = new Schema(
       required: true,
       minlength: 8, // set up pw validation & error msg***
     },
+    // ASSOCIATIONS - user can have many schedules (or just one?), resources, orders (orders be keeping track of donations ONLY), donations and msgs
     schedules: [
       {
         type: Schema.Types.ObjectId,
         ref: 'Schedule',
       },
     ],
-    orders: [Order.schema],
+    resources: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Resource',
+      },
+    ],
+    orders: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Order',
+      },
+    ],
     donations: [
       {
         type: Schema.Types.ObjectId,

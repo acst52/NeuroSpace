@@ -39,6 +39,13 @@ const resourceSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  // ASSOCIATIONS - resource belong to user & resource be part of multiple schedules
+  schedules: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Schedule',
+    },
+  ],
 });
 
 const Resource = mongoose.model('Resource', resourceSchema);

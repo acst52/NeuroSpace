@@ -26,6 +26,17 @@ const scheduleSchema = new Schema(
       ref: 'User',
       required: true,
     },
+    // ASSOCIATIONS - schedule belongs to user, sched can have many resources
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    resources: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Resource',
+      },
+    ],
   },
   {
     toJSON: {

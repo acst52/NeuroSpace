@@ -15,6 +15,17 @@ const donationSchema = new Schema(
       type: Date,
       default: Date.now,
     },
+    // ASSOCIATIONS - donation made by single User. Orders model keeps track of donation records.
+    donor: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    orders: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Order',
+      },
+    ],
   },
   {
     toJSON: {
