@@ -1,4 +1,18 @@
 const db = require('../config/connection')
+const db = require('../config/connection');
+const { User } = require('../models');
+const userSeeds = require('./userSeeds.json');
 
-const {User, Parent, } = require('../models')
+db.once('open', async () => {
+  try {
+    await User.deleteMany({});
+    await User.create(userSeeds);
+
+    process.exit(0);
+  } catch (err) {
+    throw err;
+  }
+});
+
+
 
