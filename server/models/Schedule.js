@@ -18,6 +18,18 @@ const scheduleSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'User',
           },
+          {
+            type: Schema.Types.ObjectId,
+            ref: 'Parent',
+          },
+          {
+            type: Schema.Types.ObjectId,
+            ref: 'MedicalPro',
+          },
+          {
+            type: Schema.Types.ObjectId,
+            ref: 'Educator',
+          },
         ],
       },
     ],
@@ -27,9 +39,13 @@ const scheduleSchema = new Schema(
       required: true,
     },
     // ASSOCIATIONS - schedule belongs to user, sched can have many resources
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
+    // user: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: 'User',
+    // },
+    parent:{
+      type:Schema.Types.ObjectId,
+      ref:'parent'
     },
     resources: [
       {
