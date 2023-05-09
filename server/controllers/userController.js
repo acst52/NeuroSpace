@@ -80,5 +80,17 @@ module.exports = {
     }
   },
 
-  // update user profile
+  // // update user profile
+  // const updateUserProfile({ user, body }, res) {
+  //   try {
+  //     const updatedUser = await User.findByIdAndUpdate(
+  //       user._id,
+  //       body,
+  //       { new: true },
+  //     );
+  //     res.status(200).json(updatedUser);
+  //   } catch (error) {
+  //     res.status(500).json(error);
+  //   }
+  // }
 };
