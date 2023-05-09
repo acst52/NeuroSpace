@@ -5,9 +5,9 @@
 const { AuthenticationError } = require('apollo-server-express');
 const {
   User,
-  Product,
   Order,
   Schedule,
+  Product,
   Message,
   Donation,
 } = require('../models');
@@ -64,6 +64,9 @@ const resolvers = {
       throw new AuthenticationError('Not logged in');
     },
   },
+
+  // add for msgs and donation
+
   order: async (parent, { _id }, context) => {
     if (context.user) {
       const user = await User.findById(context.user._id).populate({
