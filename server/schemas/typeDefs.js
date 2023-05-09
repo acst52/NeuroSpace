@@ -56,8 +56,16 @@ const typeDefs = gql`
   type Donation {
     _id: ID!
     user: User!
+    name: String
+    description: String
     amount: Float!
     createdAt: String!
+  }
+
+  type Order {
+    _id: ID
+    purchaseDate: String
+    donations: [Donation]
   }
 
   type Checkout {
@@ -77,8 +85,10 @@ const typeDefs = gql`
     schedules: [Schedule]
     schedule(_id: ID!): Schedule
     messages: [Message]
+    donations(name: String): [Donation]
+    donation(_id: ID!): Donation
     order(_id: ID!): Order
-    checkout(products: [ID]!): Checkout
+    checkout(donations: [ID]!): Checkout
   }
 
   type Mutation {
@@ -88,14 +98,14 @@ const typeDefs = gql`
       email: String!
       password: String!
     ): Auth
-    addOrder(products: [ID]!): Order
+    addOrder(donations: [ID]!): Order
     updateUser(
       firstName: String
       lastName: String
       email: String
       password: String
     ): User
-    updateProduct(_id: ID!, quantity: Int!): Product
+    updateDonation(_id: ID!, amount: Float!): Donation
     login(email: String!, password: String!): Auth
     createSchedule(weekStartDate: String!): Schedule
     updateSchedule(_id: ID!, weekStartDate: String): Schedule
