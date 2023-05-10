@@ -2,12 +2,14 @@
 
 // add order create order - incl spot for price to be passed
 
+// ...and the Resolvers: queries are the R of CRUD operations, while the mutations are what you call in the front end (using the hook) to do the things and define how you want to do them, based on what args + what you have set to be returned in the typeDefs
+
 const { AuthenticationError } = require('apollo-server-express');
 const {
   User,
   Order,
   Schedule,
-  Product,
+  Resource,
   Message,
   Donation,
 } = require('../models');
@@ -86,12 +88,12 @@ const resolvers = {
 
   checkout: async (parent, args, context) => {
     const url = new URL(context.headers.referer).origin;
-    const order = new Order({ products: args.products });
+    const order = new Order({ donations: args.donations });
     const line_items = [];
 
     const { donations } = await order.populate('donations');
 
-    for (let i = 0; i < products.length; i++) {
+    for (let i = 0; i < donations.length; i++) {
       const donation = await stripe.donation.create({
         name: donation[i].name,
         description: donation[i].description,
@@ -130,6 +132,30 @@ const resolvers = {
       return { token, user };
     },
 
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+      const token = signToken(user);
+      return { token, user };
+    },
+
+    updateUser: async (parent, args, context) => {
+      if (context.user) {
+        return await User.findByIdAndUpdate(context.user._id, args, {
+          new: true,
+        });
+      }
+      throw new AuthenticationError('Not logged in');
+    },
+
     createSchedule: async (parent, { weekStartDate }, context) => {
       if (context.user) {
         const schedule = await Schedule.create({
@@ -143,12 +169,26 @@ const resolvers = {
       }
       throw new AuthenticationError('Not logged in');
     },
-    // ADD MUTATIONS FOR updateSchedule, deleteSchedule, createEvent, updateEvent, deleteEvent, addUserToEvent, and removeUserFromEvent
+    // ADD MUTATIONS FOR
 
-    // Msg & Donation feature mutations
+    // updateSchedule
+
+    // deleteSchedule
+
+    // createEvent
+
+    // updateEvent
+
+    // deleteEvent
+
+    // addUserToEvent
+
+    // removeUserFromEvent
+
     createMessage: async (parent, { sender, receiver, content }) => {
       return await Message.create({ sender, receiver, content });
     },
+
     deleteMessage: async (parent, { _id }) => {
       return await Message.findOneAndDelete({ _id });
     },
@@ -156,64 +196,30 @@ const resolvers = {
     createDonation: async (parent, { user, description, amount }) => {
       return await Donation.create({ user, description, amount });
     },
-    updateDonation: async (parent, { _id, amount }) => {
-      return await Donation.findOneAndUpdate(_id, { amount }, { new: true });
-    },
-    deleteDonation: async (parent, { _id }) => {
-      return await Donation.findOneAndDelete({ _id });
-    },
 
-    addOrder: async (parent, { products }, context) => {
-      console.log(context);
-      if (context.user) {
-        const order = new Order({ products });
-
-        await User.findByIdAndUpdate(context.user._id, {
-          $push: { orders: order },
-        });
-
-        return order;
-      }
-
-      throw new AuthenticationError('Not logged in');
-    },
-
-    updateUser: async (parent, args, context) => {
-      if (context.user) {
-        return await User.findByIdAndUpdate(context.user._id, args, {
-          new: true,
-        });
-      }
-
-      throw new AuthenticationError('Not logged in');
-    },
-
-    updateProduct: async (parent, { _id, quantity }) => {
+    updateDonation: async (parent, { _id, quantity }) => {
       const decrement = Math.abs(quantity) * -1;
-
-      return await Product.findByIdAndUpdate(
+      return await Donation.findByIdAndUpdate(
         _id,
         { $inc: { quantity: decrement } },
         { new: true }
       );
     },
 
-    login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
+    deleteDonation: async (parent, { _id }) => {
+      return await Donation.findOneAndDelete({ _id });
+    },
 
-      if (!user) {
-        throw new AuthenticationError('Incorrect credentials');
+    addOrder: async (parent, { donations }, context) => {
+      console.log(context);
+      if (context.user) {
+        const order = new Order({ donations });
+        await User.findByIdAndUpdate(context.user._id, {
+          $push: { orders: order },
+        });
+        return order;
       }
-
-      const correctPw = await user.isCorrectPassword(password);
-
-      if (!correctPw) {
-        throw new AuthenticationError('Incorrect credentials');
-      }
-
-      const token = signToken(user);
-
-      return { token, user };
+      throw new AuthenticationError('Not logged in');
     },
   },
 };
