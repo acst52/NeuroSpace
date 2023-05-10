@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { loginUser } from '../utils/API';
 import Auth from '../utils/auth';
@@ -37,7 +37,6 @@ const LoginForm = () => {
     }
 
     setUserFormData({
-      username: '',
       email: '',
       password: '',
     });
@@ -45,80 +44,47 @@ const LoginForm = () => {
   return (
     <>
       <form className="loginForm" onSubmit={handleFormSubmit}>
-        
-        <label className="label">Email:</label>
-        <input
-          type="email"
-          name= "email"
-          className="entryField"
-          value={userFormData.email}
-          onChange={handleInputChange}
-          required
-        />
-
-          <label className ="label" htmlFor='password'>Password:</label>
+        <label className="label">
+          Email:
           <input
-          className="entryField"
-            type='password'
-            placeholder='Your password'
-            name='password'
+            type="email"
+            name="email"
+            className="entryField"
+            value={userFormData.email}
+            onChange={handleInputChange}
+            required
+          />
+        </label>
+        <label className="label">
+          Password:
+          <input
+            className="entryField"
+            type="password"
+            placeholder="Your password"
+            name="password"
             onChange={handleInputChange}
             value={userFormData.password}
             required
           />
-          <div>
-        <button
-          disabled={!(userFormData.email && userFormData.password)}
-          type='submit'
-          variant='success'>
-          Submit
-        </button>
+        </label>
+        <div>
+          <button
+            disabled={!(userFormData.email && userFormData.password)}
+            type="submit"
+            variant="success"
+          >
+            Submit
+          </button>
         </div>
         <div className="linkContainer">
-        <p>Don't have an account yet?</p>
-        <Link to="/signup" className="link">
-          Sign up instead!
-        </Link>
-      </div>
+          <p>Don't have an account yet?</p>
+          <Link to="/signup" className="link">
+            Sign up instead!
+          </Link>
+        </div>
       </form>
     </>
   );
 };
 
 export default LoginForm;
- /*  return (
-    <div>
-    <h1 className='title'>LOGIN</h1>
-    <form className="loginForm"noValidate validated={validated} onSubmit={handleFormSubmit}>   
-      <div>
-        <label className="label">Email:</label>
-        <input
-          type="email"
-          className="entryField"
-          value={userFormData.email}
-          onChange={handleInputChange}
-          required
-        />
-      </div>
-      <div>
-        <label className="label">Password:</label>
-        <input
-          type="password"
-          className="entryField"
-          value={userFormData.password}
-          onChange={handleInputChange}
-          required
-        />
-      </div>
-      <button type="submit">Login</button>
-      <div className="linkContainer">
-        <p>Don't have an account yet?</p>
-        <Link to="/signup" className="link">
-          Sign up instead!
-        </Link>
-      </div>
-    </form>
-    </div>
-  );
-} */
-

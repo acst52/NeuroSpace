@@ -53,7 +53,7 @@ const SignupForm = () => {
     <div>
       <h1 className="title">SIGNUP</h1>
       <form className="signupForm" onSubmit={handleFormSubmit}>
-      <label className="label">First Name:</label>
+      <label className="label">First Name:
         <input
           type="text"
           name= "firstName"
@@ -61,8 +61,9 @@ const SignupForm = () => {
           value={userFormData.firstName}
           onChange={handleInputChange}
           required
-        />     
-          <label className="label">Last Name:</label>
+        />  
+        </label>   
+          <label className="label">Last Name:
         <input
           type="text"
           name= "lastName"
@@ -71,7 +72,8 @@ const SignupForm = () => {
           onChange={handleInputChange}
           required
         />   
-      <label className="label">Email:</label>
+        </label>
+      <label className="label">Email:
         <input
           type="email"
           name= "email"
@@ -80,8 +82,9 @@ const SignupForm = () => {
           onChange={handleInputChange}
           required
         />
+        </label>
 
-          <label className ="label" htmlFor='password'>Password:</label>
+          <label className ="label" >Password:
           <input
           className="entryField"
             type='password'
@@ -91,6 +94,7 @@ const SignupForm = () => {
             value={userFormData.password}
             required
           />
+          </label>
           <div>
         <button
           disabled={!(userFormData.firstName && userFormData.lastName && userFormData.email && userFormData.password)}
