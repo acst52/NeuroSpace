@@ -53,6 +53,7 @@ button:hover {
   text-decoration: none;
   color:#f0f7f4;
 }
+/* used to make header scroll */
 .header {
   position: fixed;
   top: 0;
@@ -62,9 +63,11 @@ button:hover {
   padding: 10px;
   transition: background-color 0.3s ease;
 }
+/* used to make content lower then header */
 .contentBody {
   margin-top:160px;
 }
+
 .title {
 
   margin-top:5%;
@@ -101,7 +104,8 @@ button:hover {
 .dropdownContainer {
   position: relative;
   display: inline-block;
-  padding: 1%;
+  padding:0.5%;
+  padding-right: 3%;
   height:min-content
 }
 
@@ -109,6 +113,7 @@ button:hover {
   position: relative;
   z-index: 1;
   height:fit-content;
+  padding:3%;
 }
 
 .dropdownContent {
@@ -208,6 +213,20 @@ button:hover {
   }
   .link {
     margin-left: 1%;
+  }
+  .dropdownContainer {
+    position: relative;
+    display: inline-block;
+    padding:0.5%;
+    padding-right: 4%;
+    height:min-content
+  }
+  
+  .dropdownButton {
+    position: relative;
+    z-index: 1;
+    height:fit-content;
+    padding:2%;
   }
  /*  
 .youtubeVideoContainer{
