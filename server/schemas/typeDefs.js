@@ -126,7 +126,6 @@ const typeDefs = gql`
     removeUserFromEvent(eventId: ID!, userId: ID!): Event
 
     updateDonation(_id: ID!, quantity: Int!): Donation
-
     addOrder(donations: [ID]!): Order
 
     createCheckoutSession(amount: Float!): Checkout
