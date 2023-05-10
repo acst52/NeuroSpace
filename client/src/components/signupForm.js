@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import {Link} from 'react-router-dom';
-
-import { loginUser } from '../utils/API';
+import { Link } from 'react-router-dom';
+import { createUser } from '../utils/API';
 import Auth from '../utils/auth';
 
-const LoginForm = () => {
-  const [userFormData, setUserFormData] = useState({ email: '', password: '' });
+const SignupForm = () => {
+  // set initial form state
+  const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
+  // set state for form validation
+  const [validated] = useState(false);
+  // set state for alert
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -23,7 +27,7 @@ const LoginForm = () => {
     }
 
     try {
-      const response = await loginUser(userFormData);
+      const response = await createUser(userFormData);
 
       if (!response.ok) {
         throw new Error('something went wrong!');
@@ -34,6 +38,7 @@ const LoginForm = () => {
       Auth.login(token);
     } catch (err) {
       console.error(err);
+      setShowAlert(true);
     }
 
     setUserFormData({
@@ -42,11 +47,34 @@ const LoginForm = () => {
       password: '',
     });
   };
+
+
+/* function SignupForm() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Perform login logic with email and password
+    console.log('Signup form submitted');
+    console.log('Email:', email);
+    console.log('Password:', password);
+  }; */
+
   return (
-    <>
-      <form className="loginForm" onSubmit={handleFormSubmit}>
-        
-        <label className="label">Email:</label>
+    <div>
+      <h1 className="title">SIGNUP</h1>
+      <form className="signupForm" onSubmit={handleFormSubmit}>
+              
+      <label className="label">Email:</label>
         <input
           type="email"
           name= "email"
@@ -75,50 +103,15 @@ const LoginForm = () => {
         </button>
         </div>
         <div className="linkContainer">
-        <p>Don't have an account yet?</p>
-        <Link to="/signup" className="link">
-          Sign up instead!
-        </Link>
-      </div>
+          <p>Already have an account?</p>
+          <Link to="/login" className="link">
+            {' '}
+            Log in instead!
+          </Link>
+        </div>
       </form>
-    </>
-  );
-};
-
-export default LoginForm;
- /*  return (
-    <div>
-    <h1 className='title'>LOGIN</h1>
-    <form className="loginForm"noValidate validated={validated} onSubmit={handleFormSubmit}>   
-      <div>
-        <label className="label">Email:</label>
-        <input
-          type="email"
-          className="entryField"
-          value={userFormData.email}
-          onChange={handleInputChange}
-          required
-        />
-      </div>
-      <div>
-        <label className="label">Password:</label>
-        <input
-          type="password"
-          className="entryField"
-          value={userFormData.password}
-          onChange={handleInputChange}
-          required
-        />
-      </div>
-      <button type="submit">Login</button>
-      <div className="linkContainer">
-        <p>Don't have an account yet?</p>
-        <Link to="/signup" className="link">
-          Sign up instead!
-        </Link>
-      </div>
-    </form>
     </div>
   );
-} */
+}
 
+export default SignupForm;

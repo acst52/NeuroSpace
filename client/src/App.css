@@ -1,38 +1,209 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  vertical-align: baseline;
+    box-sizing: border-box;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.lightMode {
+  background-color: #e4e5f1;
+  color:#32292F;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.darkMode {
+  background-color: #32292F;
+  color:#f0f7f4;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.toggleButton {
+  background-color: #e4e5f1;
+  margin-top: 20px;
+  margin-left:10px;
+  border-style: none;
+  padding:0%;
+  height:50px;
+  width: 50px;
+  border-radius:50%
+}
+.logo {
+  width: 300px;
+}
+.sunIcon, .moonIcon {
+  width:50px;
+  border-radius: 50%;
+}
+.navSection,
+.logoSection, .dashboardMenu {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+Button {
+  background-color: #3f48cc;
+  color: #f0f7f4;
+  font-size: 20px;
+  margin: 1%;
+  padding: 1%;
+  border-radius: 5%;
+  height: fit-content;
+}
+button:hover {
+  background-color:#ff7f27;
+}
+.btnLink {
+  text-decoration: none;
+  color:#f0f7f4;
+}
+.title {
+  margin-top:5%;
+  width:100%;
+  background-color:#ff7f27;
+  color:#f0f7f4;
+  padding:2%;
+}
+.loginForm, .signupForm, .searchForm, .searchData {
+  width: 80%;
+  margin: 0 auto;
+  padding-top:5%;
+}
+.label {
+  display: block;
+  margin-bottom: 5px;
+}
+.entryField {
+  width: 100%;
+  padding: 2%;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.link {
+  color: #0ed145;
+}
+.linkContainer {
+  display:block;
+  margin-top:5%;
+}
+/* dashboard dropdown */
+
+.dropdownContainer {
+  position: relative;
+  display: inline-block;
+  padding: 1%;
+  height:min-content
+}
+
+.dropdownButton {
+  position: relative;
+  z-index: 1;
+  height:fit-content;
+}
+
+.dropdownContent {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 2;
+  background-color:#e4e5f1;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.dropdownLink {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #000;
+}
+
+.dropdownLink:hover {
+  background-color: #f1f1f1;
+}
+
+
+/* modal */
+.youtubeVideoContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  /* height: 100%; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* z-index: 9999; */
+  padding-bottom: 56.25%; /* 16:9 aspect ratio (for responsive video) */
+  margin: 0 auto; /* Center the container horizontally */
+}
+
+.youtubeVideoContainer iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.youtubeVideoContainer .closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 999;
+  background: transparent;
   color: white;
+  border: none;
+  cursor: pointer;
+}
+/* .modal {
+  position: relative;
+  padding-bottom: 56.25%; 
+  width:300px;
+  overflow: hidden;
+  margin: 0 auto; 
 }
 
-.App-link {
-  color: #61dafb;
-}
+.modalContent {
+  position: absolute;
+  background-color: #fff;
+  padding: 20px;
+  width: 300px;
+  height: 100%;
+} */
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+
+
+@media screen and (min-width: 769px) {
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 2%;
   }
-  to {
-    transform: rotate(360deg);
+  .navSection {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
   }
+  .loginForm, .signupForm {
+    width: 50%;
+    margin: 0 auto;
+  }
+  .linkContainer {
+    display:flex;
+    flex-direction: row;
+    margin-top:5%;
+  }
+  .link {
+    margin-left: 1%;
+  }
+ /*  
+.youtubeVideoContainer{
+  position: relative;
+  background-color: #fff;
+  padding: 20px;
+  width:80%;
+  height: 150%;
+  overflow-y:auto;
+  padding-bottom:0%;
+} */
 }
