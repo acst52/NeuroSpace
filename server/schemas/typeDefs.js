@@ -124,11 +124,7 @@ const typeDefs = gql`
     addUserToEvent(eventId: ID!, userId: ID!): Event
     removeUserFromEvent(eventId: ID!, userId: ID!): Event
 
-    createMessage
-    deleteMessage
-    createDonation
     updateDonation(_id: ID!, quantity: Int!): Donation
-    deleteDonation
   
     addOrder(donations: [ID]!): Order
     
