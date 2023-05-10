@@ -5,7 +5,7 @@ import React from 'react';
 function Messages() {
 
   return (
-    <div>
+    <div className='contentBody'>
       <h1 className="title">DASHBOARD - Messages</h1>
       <section className = "messages">
       </section>

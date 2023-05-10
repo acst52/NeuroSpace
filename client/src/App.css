@@ -53,7 +53,20 @@ button:hover {
   text-decoration: none;
   color:#f0f7f4;
 }
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+}
+.contentBody {
+  margin-top:160px;
+}
 .title {
+
   margin-top:5%;
   width:100%;
   background-color:#ff7f27;

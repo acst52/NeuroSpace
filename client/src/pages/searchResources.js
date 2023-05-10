@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import YouTubeVideo from '../components/youtubeVideo';
-import VideoModal from '../components/videoModal';
 
 function SearchForm() {
   const [searchInput, setSearchInput] = useState('');
@@ -48,7 +47,7 @@ function SearchForm() {
   };
 
   return (
-    <div>
+    <div className='contentBody'>
       <h1 className="title">SEARCH</h1>
       <form className="searchForm" onSubmit={handleSubmit}>
         <div>
