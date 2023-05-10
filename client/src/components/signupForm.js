@@ -5,7 +5,7 @@ import Auth from '../utils/auth';
 
 const SignupForm = () => {
   // set initial form state
-  const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
+  const [userFormData, setUserFormData] = useState({ firstName: '', lastName: '', email: '', password: '' });
   // set state for form validation
   const [validated] = useState(false);
   // set state for alert
@@ -19,7 +19,7 @@ const SignupForm = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    // check if form has everything (as per react-bootstrap docs)
+    // check if form has everything 
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -42,38 +42,35 @@ const SignupForm = () => {
     }
 
     setUserFormData({
-      username: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
     });
   };
 
-
-/* function SignupForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Perform login logic with email and password
-    console.log('Signup form submitted');
-    console.log('Email:', email);
-    console.log('Password:', password);
-  }; */
-
   return (
     <div>
       <h1 className="title">SIGNUP</h1>
       <form className="signupForm" onSubmit={handleFormSubmit}>
-              
+      <label className="label">First Name:</label>
+        <input
+          type="text"
+          name= "firstName"
+          className="entryField"
+          value={userFormData.firstName}
+          onChange={handleInputChange}
+          required
+        />     
+          <label className="label">Last Name:</label>
+        <input
+          type="text"
+          name= "lastName"
+          className="entryField"
+          value={userFormData.lastName}
+          onChange={handleInputChange}
+          required
+        />   
       <label className="label">Email:</label>
         <input
           type="email"
@@ -96,7 +93,7 @@ const SignupForm = () => {
           />
           <div>
         <button
-          disabled={!(userFormData.email && userFormData.password)}
+          disabled={!(userFormData.firstName && userFormData.lastName && userFormData.email && userFormData.password)}
           type='submit'
           variant='success'>
           Submit
