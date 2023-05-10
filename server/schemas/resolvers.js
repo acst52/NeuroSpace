@@ -15,6 +15,7 @@ const { signToken } = require('../utils/auth');
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
 const resolvers = {
+  // Queries
   Query: {
     categories: async () => {
       return await Category.find();
@@ -66,6 +67,19 @@ const resolvers = {
   },
 
   // add for msgs and donation
+  messages: async () => {
+    return await Message.find();
+  },
+  message: async (parent, { _id }) => {
+    return await Message.findById(_id);
+  },
+
+  donations: async () => {
+    return await Donation.find();
+  },
+  donation: async (parent, { _id }) => {
+    return await Donation.findById(_id);
+  },
 
   order: async (parent, { _id }, context) => {
     if (context.user) {
@@ -79,6 +93,7 @@ const resolvers = {
 
     throw new AuthenticationError('Not logged in');
   },
+
   checkout: async (parent, args, context) => {
     const url = new URL(context.headers.referer).origin;
     const order = new Order({ products: args.products });
@@ -116,6 +131,7 @@ const resolvers = {
     return { session: session.id };
   },
 
+  // Mutations
   Mutation: {
     addUser: async (parent, args) => {
       const user = await User.create(args);
@@ -139,7 +155,24 @@ const resolvers = {
     },
     // ADD MUTATIONS FOR updateSchedule, deleteSchedule, createEvent, updateEvent, deleteEvent, addUserToEvent, and removeUserFromEvent
 
-    // ADD MUTATIONS FOR MESSAGE AND DONATION FEATURES!
+    // Msg & Donation feature mutations
+    createMessage: async (parent, { sender, receiver, content }) => {
+      return await Message.create({ sender, receiver, content });
+    },
+    deleteMessage: async (parent, { _id }) => {
+      return await Message.findOneAndDelete({ _id });
+    },
+
+    createDonation: async (parent, { user, description, amount }) => {
+      return await Donation.create({ user, description, amount });
+    },
+    updateDonation: async (parent, { _id, amount }) => {
+      return await Donation.findOneAndUpdate(_id, { amount }, { new: true });
+    },
+    deleteDonation: async (parent, { _id }) => {
+      return await Donation.findOneAndDelete({ _id });
+    },
+
     addOrder: async (parent, { products }, context) => {
       console.log(context);
       if (context.user) {
