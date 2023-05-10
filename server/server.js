@@ -28,6 +28,10 @@ app.use('/images', express.static(path.join(__dirname, '../client/images')));
 
 // DEFINE API ROUTES HERE!!!
 // Example: app.use('/api/users', usersRouter);
+app.use('/api/user', userRouter);
+app.use('/api/schedule', scheduleRouter);
+app.use('/api/messages', messageRouter);
+app.use('/api/donations', donationRouter);
 
 // Catch-all route to serve the React app for any other request
 // app.get('*', (req, res) => {
@@ -36,7 +40,7 @@ app.use('/images', express.static(path.join(__dirname, '../client/images')));
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async (typeDefs, resolvers) => {
-  await server.start();
+  await server.start(); // don't need this line?
   server.applyMiddleware({ app });
 
   // seed once!
