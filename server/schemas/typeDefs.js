@@ -112,6 +112,7 @@ const typeDefs = gql`
     createSchedule(weekStartDate: String!): Schedule
     updateSchedule(_id: ID!): Schedule
     deleteSchedule(_id: ID!): Schedule
+
     createEvent(
       scheduleId: ID!
       title: String
@@ -124,20 +125,31 @@ const typeDefs = gql`
     addUserToEvent(eventId: ID!, userId: ID!): Event
     removeUserFromEvent(eventId: ID!, userId: ID!): Event
 
-    createMessage
-    deleteMessage
-    createDonation
     updateDonation(_id: ID!, quantity: Int!): Donation
-    deleteDonation
-  
+
     addOrder(donations: [ID]!): Order
-    
+
     createCheckoutSession(amount: Float!): Checkout
     recordDonation(amount: Float!): Donation
+
+    addUserToSchedule: Schedule
+    createMessage: Message
+    deleteMessage: Message
+    createDonation: Donation
+    Donation: Donation
+    deleteDonation: Donation
   }
 `;
 
 module.exports = typeDefs;
+
+// TODO
+// addUserToSchedule
+// createMessage
+// deleteMessage
+// createDonation
+// Donation
+// deleteDonation
 
 // Notes re: extend type Mutation:
 // 1. `createCheckoutSession` - takes donation amt as input and returns a `Checkout` type w `sessionId`... Use this sessionId to redir user to Stripe Checkout pg to complete donation payment.
