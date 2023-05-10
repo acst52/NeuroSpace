@@ -1,10 +1,10 @@
-// WILL OBVIOUSLY NEED TO ADD MORE, BELOW IS JUST FROM STRIPE CLASS NOTES!
-
-// 1 product type, new instance price is diff (get from user input)
+// product type, new instance price is diff (get from user input)
 
 // need all the diff things you might need to read from db (to find in queries) + all things you want to change (mutate) in db --> mutations
 
 // typeDefs = what args you have to pass to the mutations. when you define mutations, you need to incl params that you need to run mutation + the type that it's going to return
+
+// So the typeDefs define what you want to be ABLE to do...
 
 const { gql } = require('apollo-server-express');
 
@@ -102,15 +102,13 @@ const typeDefs = gql`
       email: String!
       password: String!
     ): Auth
-    addOrder(donations: [ID]!): Order
+    login(email: String!, password: String!): Auth
     updateUser(
       firstName: String
       lastName: String
       email: String
       password: String
     ): User
-    updateDonation(_id: ID!, amount: Float!): Donation
-    login(email: String!, password: String!): Auth
     createSchedule(weekStartDate: String!): Schedule
     updateSchedule(_id: ID!): Schedule
     deleteSchedule(_id: ID!): Schedule
@@ -125,6 +123,15 @@ const typeDefs = gql`
     deleteEvent(eventId: ID!): Event
     addUserToEvent(eventId: ID!, userId: ID!): Event
     removeUserFromEvent(eventId: ID!, userId: ID!): Event
+
+    createMessage
+    deleteMessage
+    createDonation
+    updateDonation(_id: ID!, quantity: Int!): Donation
+    deleteDonation
+  
+    addOrder(donations: [ID]!): Order
+    
     createCheckoutSession(amount: Float!): Checkout
     recordDonation(amount: Float!): Donation
   }
