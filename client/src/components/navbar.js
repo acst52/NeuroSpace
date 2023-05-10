@@ -13,8 +13,12 @@ function Navbar() {
     setDarkMode(!darkMode);
   };
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+  const handleMouseEnter = () => {
+    setIsDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDropdownOpen(false);
   };
 
   useEffect(() => {
@@ -45,8 +49,12 @@ function Navbar() {
         <button className="navButton">
           <Link to="/" className="btnLink">SEARCH</Link>
         </button>
-        <div className="dropdownContainer">
-          <button className="dropdownButton" onClick={toggleDropdown}>
+        <div
+          className="dropdownContainer"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <button className="navButton dropdownButton">
             DASHBOARD
           </button>
           {isDropdownOpen && (
