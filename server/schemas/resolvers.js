@@ -15,43 +15,37 @@ const { signToken } = require('../utils/auth');
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
 const resolvers = {
-  // Queries
+  // Queries - like the R of CRUD
   Query: {
     categories: async () => {
       return await Category.find();
     },
-    products: async (parent, { category, name }) => {
-      const params = {};
 
+    resources: async (parent, { category, title }) => {
+      const params = {};
       if (category) {
         params.category = category;
       }
-
-      if (name) {
-        params.name = {
-          $regex: name,
-        };
+      if (title) {
+        params.title = title;
       }
+      return await Resources.find(params);
+    },
 
-      return await Product.find(params).populate('category');
+    resource: async (parent, { _id }) => {
+      return await Resources.find(_id);
     },
-    product: async (parent, { _id }) => {
-      return await Product.findById(_id).populate('category');
-    },
+
     user: async (parent, args, context) => {
       if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: 'orders.products',
-          populate: 'category',
-        });
-
+        const user = await User.findById(context.user._id);
         user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
-
         return user;
       }
 
       throw new AuthenticationError('Not logged in');
     },
+
     schedules: async (parent, args, context) => {
       if (context.user) {
         return await Schedule.find({ owner: context.user._id });
@@ -60,7 +54,7 @@ const resolvers = {
     },
     schedule: async (parent, { _id }, context) => {
       if (context.user) {
-        return await Schedule.findOne({ _id, owner: context.user._id });
+        return await Schedule.findById(_id);
       }
       throw new AuthenticationError('Not logged in');
     },
@@ -83,14 +77,10 @@ const resolvers = {
 
   order: async (parent, { _id }, context) => {
     if (context.user) {
-      const user = await User.findById(context.user._id).populate({
-        path: 'orders.products',
-        populate: 'category',
-      });
-
+      // find user by id if user is logged in, return user's orders . id, id is passed to query. if user not logged in, err
+      const user = await User.findById(context.user._id);
       return user.orders.id(_id);
     }
-
     throw new AuthenticationError('Not logged in');
   },
 
@@ -99,19 +89,19 @@ const resolvers = {
     const order = new Order({ products: args.products });
     const line_items = [];
 
-    const { products } = await order.populate('products');
+    const { donations } = await order.populate('donations');
 
     for (let i = 0; i < products.length; i++) {
-      const product = await stripe.products.create({
-        name: products[i].name,
-        description: products[i].description,
-        images: [`${url}/images/${products[i].image}`],
+      const donation = await stripe.donation.create({
+        name: donation[i].name,
+        description: donation[i].description,
+        images: [`${url}/images/${donation[i].image}`],
       });
 
       const price = await stripe.prices.create({
-        product: product.id,
-        unit_amount: products[i].price * 100,
-        currency: 'usd',
+        donation: donation.id,
+        unit_amount: donation[i].price * 100,
+        currency: 'cad',
       });
 
       line_items.push({
@@ -131,7 +121,7 @@ const resolvers = {
     return { session: session.id };
   },
 
-  // Mutations
+  // Mutations - like the C U D of CRUD
   Mutation: {
     addUser: async (parent, args) => {
       const user = await User.create(args);

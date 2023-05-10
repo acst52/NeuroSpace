@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
+const Schedule = require('./Schedule');
 
 const resourceSchema = new Schema({
   title: {
@@ -40,12 +41,7 @@ const resourceSchema = new Schema({
     default: Date.now,
   },
   // ASSOCIATIONS - resource belong to user & resource be part of multiple schedules
-  schedules: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Schedule',
-    },
-  ],
+  schedules: [Schedule.schema],
 });
 
 const Resource = mongoose.model('Resource', resourceSchema);
