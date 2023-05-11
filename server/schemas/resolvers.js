@@ -167,6 +167,23 @@ const resolvers = {
       throw new AuthenticationError('Not logged in');
     },
     // ADD MUTATIONS FOR
+    
+    // addUserToSchedule - typeDef: addUserToSchedule(scheduleId: ID!): Schedule
+    addCollaboratorToSchedule: async (_, { scheduleId, userId }, { user }) => {
+      if (!user) {
+        throw new AuthenticationError(
+          'You must be logged in to add someone to your schedule!'
+        );
+      }
+      const schedule = await Schedule.findById(scheduleId);
+      if (!schedule) {
+        throw new UserInputError('Schedule not found!');
+      }
+
+      schedule.collaborator.push(userId);
+      await schedule.save();
+      return schedule;
+    },
 
     // updateSchedule
 
