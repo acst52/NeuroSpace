@@ -28,11 +28,11 @@ const resolvers = {
       if (title) {
         params.title = title;
       }
-      return await Resources.find(params);
+      return await Resource.find(params);
     },
 
     resource: async (parent, { _id }) => {
-      return await Resources.find(_id);
+      return await Resource.find(_id);
     },
 
     user: async (parent, args, context) => {
@@ -57,67 +57,67 @@ const resolvers = {
       }
       throw new AuthenticationError('Not logged in');
     },
-  
 
-  // add for msgs and donation
-  messages: async () => {
-    return await Message.find();
-  },
-  message: async (parent, { _id }) => {
-    return await Message.findById(_id);
-  },
+    // add for msgs and donation
+    messages: async () => {
+      return await Message.find();
+    },
+    message: async (parent, { _id }) => {
+      return await Message.findById(_id);
+    },
 
-  donations: async () => {
-    return await Donation.find();
-  },
-  donation: async (parent, { _id }) => {
-    return await Donation.findById(_id);
-  },
+    donations: async () => {
+      return await Donation.find();
+    },
+    donation: async (parent, { _id }) => {
+      return await Donation.findById(_id);
+    },
 
-  order: async (parent, { _id }, context) => {
-    if (context.user) {
-      // find user by id if user is logged in, return user's orders . id, id is passed to query. if user not logged in, err
-      const user = await User.findById(context.user._id);
-      return user.orders.id(_id);
-    }
-    throw new AuthenticationError('Not logged in');
-  },
+    order: async (parent, { _id }, context) => {
+      if (context.user) {
+        // find user by id if user is logged in, return user's orders . id, id is passed to query. if user not logged in, err
+        const user = await User.findById(context.user._id);
+        return user.orders.id(_id);
+      }
+      throw new AuthenticationError('Not logged in');
+    },
 
-  checkout: async (parent, args, context) => {
-    const url = new URL(context.headers.referer).origin;
-    const order = new Order({ donations: args.donations });
-    const line_items = [];
+    checkout: async (parent, args, context) => {
+      const url = new URL(context.headers.referer).origin;
+      const order = new Order({ donations: args.donations });
+      const line_items = [];
 
-    const { donations } = await order.populate('donations');
+      const { donations } = await order.populate('donations');
 
-    for (let i = 0; i < donations.length; i++) {
-      const donation = await stripe.donation.create({
-        name: donation[i].name,
-        description: donation[i].description,
-        images: [`${url}/images/${donation[i].image}`],
+      for (let i = 0; i < donations.length; i++) {
+        const donation = await stripe.donation.create({
+          name: donation[i].name,
+          description: donation[i].description,
+          images: [`${url}/images/${donation[i].image}`],
+        });
+
+        const price = await stripe.prices.create({
+          donation: donation.id,
+          unit_amount: donation[i].price * 100,
+          currency: 'cad',
+        });
+
+        line_items.push({
+          price: price.id,
+          quantity: 1,
+        });
+      }
+
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items,
+        mode: 'payment',
+        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${url}/`,
       });
 
-      const price = await stripe.prices.create({
-        donation: donation.id,
-        unit_amount: donation[i].price * 100,
-        currency: 'cad',
-      });
-
-      line_items.push({
-        price: price.id,
-        quantity: 1,
-      });
-    }
-
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items,
-      mode: 'payment',
-      success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${url}/`,
-    });
-
-    return { session: session.id };
+      return { session: session.id };
+    },
   },
 },
 
@@ -168,6 +168,23 @@ const resolvers = {
       throw new AuthenticationError('Not logged in');
     },
     // ADD MUTATIONS FOR
+    
+    // addUserToSchedule - typeDef: addUserToSchedule(scheduleId: ID!): Schedule
+    addCollaboratorToSchedule: async (_, { scheduleId, userId }, { user }) => {
+      if (!user) {
+        throw new AuthenticationError(
+          'You must be logged in to add someone to your schedule!'
+        );
+      }
+      const schedule = await Schedule.findById(scheduleId);
+      if (!schedule) {
+        throw new UserInputError('Schedule not found!');
+      }
+
+      schedule.collaborator.push(userId);
+      await schedule.save();
+      return schedule;
+    },
 
     // updateSchedule
 
