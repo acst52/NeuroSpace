@@ -3,7 +3,6 @@
 // add order create order - incl spot for price to be passed
 
 // ...and the Resolvers: queries are the R of CRUD operations, while the mutations are what you call in the front end (using the hook) to do the things and define how you want to do them, based on what args + what you have set to be returned in the typeDefs
-// comment
 
 const { AuthenticationError } = require('apollo-server-express');
 const {
