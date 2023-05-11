@@ -19,7 +19,6 @@ const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 const resolvers = {
   // Queries - like the R of CRUD
   Query: {
-
     resources: async (parent, { category, title }) => {
       const params = {};
       if (category) {
@@ -119,7 +118,6 @@ const resolvers = {
       return { session: session.id };
     },
   },
-},
 
   // Mutations - like the C U D of CRUD
   Mutation: {
@@ -167,8 +165,7 @@ const resolvers = {
       }
       throw new AuthenticationError('Not logged in');
     },
-    // ADD MUTATIONS FOR
-    
+
     // addUserToSchedule - typeDef: addUserToSchedule(scheduleId: ID!): Schedule
     addCollaboratorToSchedule: async (_, { scheduleId, userId }, { user }) => {
       if (!user) {
@@ -200,17 +197,17 @@ const resolvers = {
 
     // removeUserFromEvent
 
-//     createMessage: async (parent, { sender, receiver, content }) => {
-//       return await Message.create({ sender, receiver, content });
-//     },
+    //     createMessage: async (parent, { sender, receiver, content }) => {
+    //       return await Message.create({ sender, receiver, content });
+    //     },
 
-//     deleteMessage: async (parent, { _id }) => {
-//       return await Message.findOneAndDelete({ _id });
-//     },
+    //     deleteMessage: async (parent, { _id }) => {
+    //       return await Message.findOneAndDelete({ _id });
+    //     },
 
-//     createDonation: async (parent, { user, description, amount }) => {
-//       return await Donation.create({ user, description, amount });
-//     },
+    //     createDonation: async (parent, { user, description, amount }) => {
+    //       return await Donation.create({ user, description, amount });
+    //     },
 
     updateDonation: async (parent, { _id, quantity }) => {
       const decrement = Math.abs(quantity) * -1;
@@ -221,9 +218,9 @@ const resolvers = {
       );
     },
 
-//     deleteDonation: async (parent, { _id }) => {
-//       return await Donation.findOneAndDelete({ _id });
-//     },
+    //     deleteDonation: async (parent, { _id }) => {
+    //       return await Donation.findOneAndDelete({ _id });
+    //     },
 
     addOrder: async (parent, { donations }, context) => {
       console.log(context);
