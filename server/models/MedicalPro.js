@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-import Schedule from './Schedule';
 
 const MedicalProSchema = new Schema(
   {
@@ -47,7 +46,7 @@ const MedicalProSchema = new Schema(
     parent:[{
         
             type: Schema.Types.ObjectId,
-            ref: 'Message',
+            ref: 'parent',
           
     }],
 

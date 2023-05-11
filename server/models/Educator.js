@@ -45,7 +45,7 @@ const educatorSchema = new Schema(
     parent:[{
         
             type: Schema.Types.ObjectId,
-            ref: 'Message',
+            ref: 'Parent',
           
     }],
     
@@ -75,4 +75,4 @@ educatorSchema.methods.isCorrectPassword = async function (password) {
 
 const Educator = mongoose.model('Educator', educatorSchema);
 
-module.exports = User;
+module.exports = Educator;

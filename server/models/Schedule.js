@@ -45,7 +45,7 @@ const scheduleSchema = new Schema(
     // },
     parent:{
       type:Schema.Types.ObjectId,
-      ref:'parent'
+      ref:'Parent'
     },
     resources: [
       {

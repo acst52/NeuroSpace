@@ -6,6 +6,11 @@ const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
 const Order = require('./Order');
 const Schedule = require('./Schedule');
+const Message = require('./Message');
+const Donation = require('./Donation');
+const Resource = require('./Resource');
+const MedicalPro = require('./MedicalPro');
+const Parent = require('./Parent')
 
 const userSchema = new Schema(
   {
@@ -31,38 +36,14 @@ const userSchema = new Schema(
       minlength: 8, // set up pw validation & error msg***
     },
     // ASSOCIATIONS - user can have many schedules (or just one?), resources, orders (orders be keeping track of donations ONLY), donations and msgs
-    // sign up - which following are you - select - if else - create child/parent/etc account / 
-    schedules: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Schedule',
-      },
-    ],
-    resources: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Resource',
-      },
-    ],
-    orders: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Order',
-      },
-    ],
-    donations: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Donation',
-      },
-    ],
-    //donation model - who donate - how much 
-    messages: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Message',
-      },
-    ],
+    // ObjectId - wont give access to all. have to do array of schedule(etc) schemas
+    schedules: [Schedule.schema],
+    resources: [Resource.schema],
+    orders: [Order.schema],
+    donations: [Donation.schema],
+    messages: [Message.schema],
+
+
   },
   // set this to use virtual below
   {
@@ -78,7 +59,6 @@ userSchema.pre('save', async function (next) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
-
   next();
 });
 
