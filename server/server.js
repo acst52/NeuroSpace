@@ -19,16 +19,9 @@ const server = new ApolloServer({
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// DEFINE API ROUTES HERE!!!
-// Example: app.use('/api/users', usersRouter);
-// app.use('/api/user', userRouter);
-// app.use('/api/schedule', scheduleRouter);
-// app.use('/api/messages', messageRouter);
-// app.use('/api/donations', donationRouter);
-
 // Catch-all route to serve the React app for any other request
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client/build')));
+  app.use(express.static(path.join(__dirname, '../client/build')));
 }
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
