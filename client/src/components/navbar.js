@@ -4,8 +4,14 @@ import logo from './images/neuroSpaceLogo4.png';
 import sunIcon from './images/sunIcon2.png';
 import moonIcon from './images/moonIcon2.png';
 import '../App.css';
+import auth from '../utils/auth';
 
 function Navbar()  {
+  const logout = (event) => {
+    event.preventDefault();
+    auth.logout();
+  };
+
   const [darkMode, setDarkMode] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -64,9 +70,17 @@ function Navbar()  {
             </div>
           )}
         </div>
-        <button className="navButton">
-          <Link to="/login" className="btnLink">LOGIN</Link>
+        {auth.loggedIn() ? (
+        <button className="navButton" onClick={logout}>
+            LOGOUT
         </button>
+        ) : (
+          <>
+          <button className="navButton">
+          <Link to="/login" className="btnLink">
+            LOGIN</Link>
+        </button>
+      </> )}
       </section>
     </div>
   );
