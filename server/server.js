@@ -11,31 +11,32 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: authMiddleware,
+  introspection: true,
+  // context: authMiddleware,
+  
 });
 
 // Middleware for parsing JSON and urlencoded form data
-app.use(express.urlencoded({ extended: true })); // true or false??
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
-// Serve static files from the React app in production ***OR - SEE BELOW***
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(express.static(path.join(__dirname, 'client/build')));
-// }
-// ***OR***
-// Serve static assets
-app.use('/images', express.static(path.join(__dirname, '../client/images')));
 
 // DEFINE API ROUTES HERE!!!
 // Example: app.use('/api/users', usersRouter);
+// app.use('/api/user', userRouter);
+// app.use('/api/schedule', scheduleRouter);
+// app.use('/api/messages', messageRouter);
+// app.use('/api/donations', donationRouter);
 
 // Catch-all route to serve the React app for any other request
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../client/build/index.html')); // or from class notes, '../client/build/index.html'
-// });
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client/build')));
+}
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
 
 // Create a new instance of an Apollo server with the GraphQL schema
-const startApolloServer = async (typeDefs, resolvers) => {
+const startApolloServer = async () => {
   await server.start();
   server.applyMiddleware({ app });
 
@@ -51,4 +52,4 @@ const startApolloServer = async (typeDefs, resolvers) => {
 };
 
 // Call the async function to start the server
-startApolloServer(typeDefs, resolvers);
+startApolloServer();
