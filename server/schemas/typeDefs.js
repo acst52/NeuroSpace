@@ -39,6 +39,7 @@ const typeDefs = gql`
     weekStartDate: String!
     events: [Event]!
     owner: User!
+    collaborator: User
   }
 
   type Event {
@@ -131,7 +132,7 @@ const typeDefs = gql`
     createCheckoutSession(amount: Float!): Checkout
     recordDonation(amount: Float!): Donation
 
-    addUserToSchedule: Schedule
+    addCollaboratorToSchedule: Schedule
     createMessage: Message
     deleteMessage: Message
     createDonation: Donation
