@@ -13,7 +13,6 @@ const server = new ApolloServer({
   resolvers,
   introspection: true,
   // context: authMiddleware,
-  
 });
 
 // Middleware for parsing JSON and urlencoded form data
