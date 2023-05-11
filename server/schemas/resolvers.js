@@ -57,7 +57,7 @@ const resolvers = {
       }
       throw new AuthenticationError('Not logged in');
     },
-  },
+  
 
   // add for msgs and donation
   messages: async () => {
@@ -119,6 +119,7 @@ const resolvers = {
 
     return { session: session.id };
   },
+},
 
   // Mutations - like the C U D of CRUD
   Mutation: {

@@ -1,53 +1,31 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { createUser } from '../utils/API';
-import Auth from '../utils/auth';
+import { useMutation } from '@apollo/client';
+import { ADDUSER } from '../mutations';
+import auth from "../utils/auth";
 
 const SignupForm = () => {
-  // set initial form state
-  const [userFormData, setUserFormData] = useState({ firstName: '', lastName: '', email: '', password: '' });
-  // set state for form validation
-  const [validated] = useState(false);
-  // set state for alert
-  const [showAlert, setShowAlert] = useState(false);
+  // set initial states for each field
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password,setPassword] = useState('');
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setUserFormData({ ...userFormData, [name]: value });
-  };
+ // Invoke `useMutation()` hook to return a Promise-based function and data about the ADDUSER mutation
+ const [addUser] = useMutation(ADDUSER);
 
+ 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    // check if form has everything 
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
-    try {
-      const response = await createUser(userFormData);
-
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
-
-      const { token, user } = await response.json();
-      console.log(user);
-      Auth.login(token);
-    } catch (err) {
-      console.error(err);
-      setShowAlert(true);
-    }
-
-    setUserFormData({
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-    });
+      const mutationResponse = await addUser({
+        variables: { firstName, lastName, email, password },
+      });
+    const token = mutationResponse.data.addUser.token
+    auth.login (token)
+   
   };
+     
 
   return (
     <div className='contentBody'>
@@ -58,8 +36,8 @@ const SignupForm = () => {
           type="text"
           name= "firstName"
           className="entryField"
-          value={userFormData.firstName}
-          onChange={handleInputChange}
+          value={firstName}
+          onChange={(event) => setFirstName(event.target.value)}
           required
         />  
         </label>   
@@ -68,8 +46,8 @@ const SignupForm = () => {
           type="text"
           name= "lastName"
           className="entryField"
-          value={userFormData.lastName}
-          onChange={handleInputChange}
+          value={lastName}
+          onChange={(event) => setLastName(event.target.value)}
           required
         />   
         </label>
@@ -78,8 +56,8 @@ const SignupForm = () => {
           type="email"
           name= "email"
           className="entryField"
-          value={userFormData.email}
-          onChange={handleInputChange}
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
           required
         />
         </label>
@@ -90,14 +68,14 @@ const SignupForm = () => {
             type='password'
             placeholder='Your password'
             name='password'
-            onChange={handleInputChange}
-            value={userFormData.password}
+            onChange={(event) => setPassword(event.target.value)}
+            value={password}
             required
           />
           </label>
           <div>
         <button
-          disabled={!(userFormData.firstName && userFormData.lastName && userFormData.email && userFormData.password)}
+          disabled={!(firstName && lastName && email && password)}
           type='submit'
           variant='success'>
           Submit
