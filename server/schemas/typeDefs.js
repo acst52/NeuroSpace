@@ -111,6 +111,7 @@ const typeDefs = gql`
       password: String
     ): User
     createSchedule(weekStartDate: String!): Schedule
+    addCollaboratorToSchedule(scheduleId: ID!, userId: ID!): Schedule
     updateSchedule(_id: ID!): Schedule
     deleteSchedule(_id: ID!): Schedule
 
@@ -132,7 +133,6 @@ const typeDefs = gql`
     createCheckoutSession(amount: Float!): Checkout
     recordDonation(amount: Float!): Donation
 
-    addCollaboratorToSchedule: Schedule
     createMessage: Message
     deleteMessage: Message
     createDonation: Donation
