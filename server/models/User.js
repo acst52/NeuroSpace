@@ -31,6 +31,7 @@ const userSchema = new Schema(
       minlength: 8, // set up pw validation & error msg***
     },
     // ASSOCIATIONS - user can have many schedules (or just one?), resources, orders (orders be keeping track of donations ONLY), donations and msgs
+    // sign up - which following are you - select - if else - create child/parent/etc account / 
     schedules: [
       {
         type: Schema.Types.ObjectId,
@@ -55,6 +56,7 @@ const userSchema = new Schema(
         ref: 'Donation',
       },
     ],
+    //donation model - who donate - how much 
     messages: [
       {
         type: Schema.Types.ObjectId,
@@ -88,3 +90,6 @@ userSchema.methods.isCorrectPassword = async function (password) {
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
+
+//  so for front end, while users are logging in, there will be a dropdown list for them to choose what type of users they are (eg. Parent, donators, Educators, )
+// as long as they logged in, they will be able to donate 

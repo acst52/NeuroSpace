@@ -48,7 +48,7 @@ const educatorSchema = new Schema(
             ref: 'Message',
           
     }],
-
+    
   },
   // set this to use virtual below
   {
