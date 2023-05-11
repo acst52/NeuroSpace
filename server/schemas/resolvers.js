@@ -28,11 +28,11 @@ const resolvers = {
       if (title) {
         params.title = title;
       }
-      return await Resources.find(params);
+      return await Resource.find(params);
     },
 
     resource: async (parent, { _id }) => {
-      return await Resources.find(_id);
+      return await Resource.find(_id);
     },
 
     user: async (parent, args, context) => {
