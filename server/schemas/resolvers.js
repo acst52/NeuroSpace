@@ -119,6 +119,7 @@ const resolvers = {
       return { session: session.id };
     },
   },
+},
 
   // Mutations - like the C U D of CRUD
   Mutation: {
