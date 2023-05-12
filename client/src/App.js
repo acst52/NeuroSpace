@@ -37,14 +37,17 @@ function App() {
     <div>     
       <Navbar/>
     </div>
+
     <Routes>
-          <Route path="/login" element={<Login/>} />
+              
           <Route path="/" element={<SearchResources/>} />
+          <Route path="/login" element={<Login/>} />
           <Route path='/signup' element={<Signup/>} />
           <Route path='/messages' element={<Messages/>} />
           <Route path='/calendar' element={<Calendar/>} />
           <Route path='discussions' element={<Discussions/>} />
           <Route path='/resources' element={<Resources/>} />
+        //  <Route path='/donation' element={<test/>} />
         </Routes>
     </Router>
     </ApolloProvider>

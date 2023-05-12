@@ -29,3 +29,10 @@ mutation Login($email: String!, $password: String!) {
   }
 }
 `;
+export const CREATESCHEDULE = gql`
+mutation CreateSchedule($weekStartDate: String!) {
+  createSchedule(weekStartDate: $weekStartDate) {
+    _id
+  }
+}
+`;
