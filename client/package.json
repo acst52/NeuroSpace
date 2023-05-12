@@ -1,6 +1,10 @@
+
 {
   "name": "client",
   "version": "0.1.0",
+  "engines": {
+    "npm": "8.19.3"
+  },
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.7.14",
@@ -18,7 +22,7 @@
     "react-modal": "^3.16.1",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.11.1",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "react-scroll": "^1.8.9",
     "redux": "^4.2.1",
     "web-vitals": "^2.1.4"
