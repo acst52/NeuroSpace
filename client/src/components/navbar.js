@@ -6,7 +6,7 @@ import moonIcon from './images/moonIcon2.png';
 import '../App.css';
 import auth from '../utils/auth';
 
-function Navbar()  {
+function Navbar() {
   const logout = (event) => {
     event.preventDefault();
     auth.logout();
@@ -41,13 +41,13 @@ function Navbar()  {
     <div className="header">
       <section className="logoSection">
         <img className="logo" src={logo} alt="LOGO" />
-          <button className="toggleButton" onClick={toggleDarkMode}>
-            {darkMode ? (
-              <img className="sunIcon" src={sunIcon} alt="Light Mode" />
-            ) : (
-              <img className="moonIcon" src={moonIcon} alt="Dark Mode" />
-            )}
-          </button>
+        <button className="toggleButton" onClick={toggleDarkMode}>
+          {darkMode ? (
+            <img className="sunIcon" src={sunIcon} alt="Light Mode" />
+          ) : (
+            <img className="moonIcon" src={moonIcon} alt="Dark Mode" />
+          )}
+        </button>
       </section>
       <section className="navSection">
         <button className="navButton">
@@ -61,29 +61,41 @@ function Navbar()  {
           <button className="navButton dropdownButton">
             DASHBOARD
           </button>
-          {isDropdownOpen && (
-            <div className="dropdownContent">
-              <Link to="/messages" className="dropdownLink" onClick={handleMouseLeave}>Messages</Link>
-              <Link to="/calendar" className="dropdownLink" onClick={handleMouseLeave}>Calendar</Link>
-              <Link to="/discussions" className="dropdownLink" onClick={handleMouseLeave}>Discussions</Link>
-              <Link to="/resources" className="dropdownLink" onClick={handleMouseLeave}>Resources</Link>
-            </div>
+          {auth.loggedIn() ? (
+            <>
+              {isDropdownOpen && (
+                <div className="dropdownContent">
+                  <Link to="/messages" className="dropdownLink" onClick={handleMouseLeave}>Messages</Link>
+                  <Link to="/calendar" className="dropdownLink" onClick={handleMouseLeave}>Schedule</Link>
+                  <Link to="/resources" className="dropdownLink" onClick={handleMouseLeave}>Resources</Link>
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              {isDropdownOpen && (
+                <div className="dropdownContent">
+                  <Link to="/login" className="dropdownLink" onClick={handleMouseLeave}> Login First! </Link>
+                </div>
+              )}
+            </>
           )}
         </div>
         {auth.loggedIn() ? (
-        <button className="navButton" onClick={logout}>
+          <button className="navButton" onClick={logout}>
             LOGOUT
-        </button>
+          </button>
         ) : (
-          <>
           <button className="navButton">
-          <Link to="/login" className="btnLink">
-            LOGIN</Link>
-        </button>
-      </> )}
+            <Link to="/login" className="btnLink">
+              LOGIN
+            </Link>
+          </button>
+        )}
       </section>
     </div>
   );
 }
 
 export default Navbar;
+

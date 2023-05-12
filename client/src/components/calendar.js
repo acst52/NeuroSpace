@@ -3,12 +3,12 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import Modal from 'react-modal';
+//import Modal from 'react-modal';
 import Donation from "./donation";
 import { useMutation } from '@apollo/client';
 import { CREATESCHEDULE } from '../mutations';
 
-Modal.setAppElement('#root');
+//Modal.setAppElement('#root');
 const weekStartDate = "2023-05-12T10:00:00";
 
 function Calendar() {
@@ -50,14 +50,16 @@ function Calendar() {
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
           dateClick={handleDateClick}
-          initialView={view}
+          initialView="timeGridWeek"
           headerToolbar={{
             left: 'prev,next',
             center: 'title',
-            right: 'dayGridMonth,dayGridWeek,dayGridDay'
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
           }}
           weekends={true}
           events={events}
+          slotDuration="01:00:00" // Set the duration of each time slot
+          slotLabelInterval={{ minutes: 60 }} // Display time labels every 30 minutes
         />
       </section>
       <Donation />
