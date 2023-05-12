@@ -8,9 +8,18 @@ import Messages from './components/messages';
 import Calendar from './components/calendar';
 import Discussions from './components/discussions';
 import Resources from './components/resources';
+import DonationForm from './components/donationForm';
 import './App.css';
 import {ApolloClient, InMemoryCache, ApolloProvider, createHttpLink} from "@apollo/client";
 import {setContext} from "@apollo/client/link/context";
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
+const stripeKey = process.env.REACT_APP_STRIPE_PUBLIC_KEY;
+
+const stripePromise = loadStripe(stripeKey);
+
+
 
 const httpLink = createHttpLink({
   uri: "http://localhost:3001/graphql"
@@ -32,6 +41,7 @@ const httpLink = createHttpLink({
   })
 function App() {
   return (
+    <Elements stripe={stripePromise}>
     <ApolloProvider client={client}>
     <Router>
     <div>     
@@ -39,7 +49,6 @@ function App() {
     </div>
 
     <Routes>
-              
           <Route path="/" element={<SearchResources/>} />
           <Route path="/login" element={<Login/>} />
           <Route path='/signup' element={<Signup/>} />
@@ -47,10 +56,11 @@ function App() {
           <Route path='/calendar' element={<Calendar/>} />
           <Route path='discussions' element={<Discussions/>} />
           <Route path='/resources' element={<Resources/>} />
-        //  <Route path='/donation' element={<test/>} />
+        <Route path='/donate' element={<DonationForm/>} />
         </Routes>
     </Router>
     </ApolloProvider>
+    </Elements>
   );
 }
 

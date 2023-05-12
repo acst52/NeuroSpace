@@ -155,6 +155,10 @@ button:hover {
   display:flex;
   justify-content: center;
 }
+.ccInfo {
+  padding:2%;
+  width:100%;
+}
 
 /* modal */
 .youtubeVideoContainer {
@@ -189,6 +193,9 @@ button:hover {
   color: white;
   border: none;
   cursor: pointer;
+}
+.donationTitle {
+  margin: 2%;
 }
 /* .modal {
   position: relative;
@@ -252,6 +259,11 @@ button:hover {
     position: relative;
     min-height: 85vh;
   }
+  .ccInfo {
+    padding:2%;
+    width:60%;
+  }
+ 
  /*  
 .youtubeVideoContainer{
   position: relative;

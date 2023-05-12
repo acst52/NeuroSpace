@@ -15,7 +15,9 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   introspection: true,
-  context: ({ req }) => {
+  context: authMiddleware
+  
+  /* ({ req }) => {
     // Get the authorization token from the request headers
     const token = req.headers.authorization || '';
 
@@ -35,7 +37,7 @@ const server = new ApolloServer({
       user,
       // ... other context properties if needed
     };
-  },
+  }, */
 });
 
 // Middleware for parsing JSON and urlencoded form data

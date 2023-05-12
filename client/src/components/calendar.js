@@ -14,7 +14,7 @@ const weekStartDate = "2023-05-12T10:00:00";
 function Calendar() {
   const [events, setEvents] = useState([
     { title: 'Event 1', start: '2023-05-12T10:00:00', end: '2023-05-12T12:00:00' },
-    { title: 'Event 2', start: '2023-05-11T14:00:00', end: '2023-05-11T16:00:00' }
+    { title: 'Event 2', start: '2023-05-11T:014:000', end: '2023-05-11T16:00:00' }
   ]);
 
   const [createSchedule] = useMutation(CREATESCHEDULE);
