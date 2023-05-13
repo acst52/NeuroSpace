@@ -66,7 +66,7 @@ function Navbar() {
               {isDropdownOpen && (
                 <div className="dropdownContent">
                   <Link to="/messages" className="dropdownLink" onClick={handleMouseLeave}>Messages</Link>
-                  <Link to="/calendar" className="dropdownLink" onClick={handleMouseLeave}>Schedule</Link>
+                  <Link to="/schedule" className="dropdownLink" onClick={handleMouseLeave}>Schedule</Link>
                   <Link to="/resources" className="dropdownLink" onClick={handleMouseLeave}>Resources</Link>
                 </div>
               )}

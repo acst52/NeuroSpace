@@ -197,6 +197,9 @@ button:hover {
 .donationTitle {
   margin: 2%;
 }
+.fc-toolbar-title {
+  font-size: 12pt;
+}
 /* .modal {
   position: relative;
   padding-bottom: 56.25%; 
