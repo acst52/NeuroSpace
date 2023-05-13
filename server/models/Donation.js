@@ -23,11 +23,12 @@ const donationSchema = new Schema(
       min: 0,
       default: 0,
     },
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
+    // already reference the donation in user module 
+    // user: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: 'User',
+    //   required: true,
+    // },
     createdAt: {
       type: Date,
       default: Date.now,

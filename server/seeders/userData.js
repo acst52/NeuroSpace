@@ -1,4 +1,4 @@
-[
+const userData = [
     {
       "firstName": "Brian ",
       "lastName":"Kernighan",
@@ -58,3 +58,5 @@
 
     }
   ]
+
+  module.exports = userData

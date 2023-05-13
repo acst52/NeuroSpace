@@ -1,11 +1,10 @@
-[
+const donationData = [
     {
         "name":"Visa",
         "description":"Donating for the website",
         "image":"team-1.jpg",
         "price":100,
         "quantity":1,
-        "user":newUser._id,
 
     },
     {
@@ -14,7 +13,6 @@
         "image":"team-2.jpg",
         "price":200,
         "quantity":2,
-        "user":newUser._id
     },
     {
         "name":"Visa",
@@ -22,10 +20,11 @@
         "image":"team-3.jpg",
         "price":300,
         "quantity":3,
-        "user":newUser._id
     },
 
 ]
+
+module.exports = donationData
 // [
 //     {
 //         "name":"Visa",

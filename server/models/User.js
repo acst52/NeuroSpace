@@ -35,11 +35,30 @@ const userSchema = new Schema(
     },
     // ASSOCIATIONS - user can have many schedules (or just one?), resources, orders (orders be keeping track of donations ONLY), donations and msgs
     // ObjectId - wont give access to all. have to do array of schedule(etc) schemas
-    schedules: [Schedule.schema],
-    resources: [Resource.schema],
-    orders: [Order.schema],
-    donations: [Donation.schema],
-    messages: [Message.schema],
+    // no need to add .schema 
+    //module can only reference to ID only  - can't mix and match 
+    schedules: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Schedule',
+    },],
+    resources: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Resource',
+    },],
+    orders: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Order',
+    },],
+    donations: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Donation',
+      },
+    ],
+    messages: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Message',
+    },],
   },
   // set this to use virtual below
   {

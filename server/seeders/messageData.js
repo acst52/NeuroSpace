@@ -1,21 +1,19 @@
-[
+const messageData = [
   {
       "content":"Mental health includes our emotional, psychological, and social well-being.",
-      "sender":newUser._id,
-      "recipient":newUser._id,
+
     },
     {
         "content":"It affects how we think, feel, and act.",
-        "sender":newUser._id,
-        "recipient":newUser._id,
+
     },
     {
         "content":"It also helps determine how we handle stress, relate to others, and make healthy choices.",
-        "sender":newUser._id,
-        "recipient":newUser._id,
+
     }
   
   ]
+  module.exports =  messageData
 // [
 //     {
 //         "content":"Mental health includes our emotional, psychological, and social well-being.",
