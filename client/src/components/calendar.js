@@ -3,14 +3,19 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-//import Modal from 'react-modal';
+import { useQuery } from '@apollo/client';
 import Donation from './donation';
-// import { useMutation } from '@apollo/client';
-// import { CREATESCHEDULE } from '../mutations';
 
-//Modal.setAppElement('#root');
+import { SCHEDULEQUERY } from '../utils/queries';
 
-function Calendar() {
+function Calendar({ id }) {
+
+
+  const { loading, error, data } = useQuery(SCHEDULEQUERY, {
+    variables: { id },
+  });
+
+  const [view, setView] = useState('dayGridWeek');
   const [events, setEvents] = useState([
     {
       title: 'Event 1',
@@ -24,7 +29,15 @@ function Calendar() {
     },
   ]);
 
-  const [view, setView] = useState('dayGridWeek');
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
+
+  const eventData = data.schedule.events;
 
   const handleDateClick = (arg) => {
     const title = prompt('Enter event title:');
@@ -37,23 +50,11 @@ function Calendar() {
   const handleViewChange = (newView) => {
     setView(newView);
   };
-  // **FUTURE DEVELOPMENT**
-  /* const weekStartDate = '2023-05-12T10:00:00';
-  const [createSchedule] = useMutation(CREATESCHEDULE);
-  const handleCreateCalendar = async (event) => {
-    event.preventDefault();
-    const createScheduleRes = await createSchedule({
-      variables: { weekStartDate },
-    });
-    const id = createScheduleRes.data.createSchedule._id;
-    console.log(`Created schedule with ID: ${id}`);
-  }; */
 
   return (
     <div className="contentBody">
       <h1 className="title">DASHBOARD - Schedule</h1>
       <section className="calendar">
-        {/* <button onClick={handleCreateCalendar}>Create Calendar</button> */}
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
           dateClick={handleDateClick}
@@ -64,10 +65,9 @@ function Calendar() {
             right: 'dayGridMonth,timeGridWeek,timeGridDay',
           }}
           weekends={true}
-          events={events}
-          slotDuration="01:00:00" // Set the duration of each time slot
-          slotLabelInterval={{ minutes: 60 }} // Display time labels every 30 minutes
-          
+          events={eventData}
+          slotDuration="01:00:00"
+          slotLabelInterval={{ minutes: 60 }}
         />
       </section>
       <Donation />

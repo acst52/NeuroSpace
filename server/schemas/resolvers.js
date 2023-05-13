@@ -52,14 +52,19 @@ const resolvers = {
     },
     schedule: async (parent, { _id }, context) => {
       if (context.user) {
-        return await Schedule.findById(_id);
+        const schedule = await Schedule.findById(_id);
+        return schedule;
       }
       throw new AuthenticationError('Not logged in');
     },
 
     // add for msgs and donation
-    messages: async () => {
-      return await Message.find();
+    messages: async (parent, args, context) => {
+      if (context.user) {
+        const user = await User.findById(context.user._id);
+        return user.messages.id(_id);
+      }
+      throw new AuthenticationError('Not logged in');
     },
     message: async (parent, { _id }) => {
       return await Message.findById(_id);

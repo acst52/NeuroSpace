@@ -1,0 +1,12 @@
+[
+    {
+      "content": "Hello!",
+      "sender": "645d2d2e899cfe9a123f0ad7",
+      "recipient": "645d20ccef43b95bf511e5a9"
+    },
+    {
+      "content": "How are you?",
+      "sender": "645e440e4b3ba2db7330efd1", 
+      "recipient": "645d20ccef43b95bf511e5a9"
+    }
+  ]

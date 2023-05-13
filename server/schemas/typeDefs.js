@@ -53,7 +53,7 @@ const typeDefs = gql`
   type Message {
     _id: ID!
     sender: User!
-    receiver: User!
+    recipient: User!
     content: String!
     createdAt: String!
   }
