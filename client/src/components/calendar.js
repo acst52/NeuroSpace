@@ -6,28 +6,15 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { useQuery } from '@apollo/client';
 import Donation from './donation';
 
-import { SCHEDULEQUERY } from '../utils/queries';
+import { EVENTQUERY } from '../utils/queries';
 
 function Calendar({ id }) {
-
-
-  const { loading, error, data } = useQuery(SCHEDULEQUERY, {
+  const { loading, error, data } = useQuery(EVENTQUERY, {
     variables: { id },
   });
 
-  const [view, setView] = useState('dayGridWeek');
-  const [events, setEvents] = useState([
-    {
-      title: 'Event 1',
-      start: '2023-05-12T10:00:00',
-      end: '2023-05-12T12:00:00',
-    },
-    {
-      title: 'Event 2',
-      start: '2023-05-11T:014:000',
-      end: '2023-05-11T16:00:00',
-    },
-  ]);
+  const [currentView, setView] = useState('dayGridMonth');
+  const [events, setEvents] = useState([]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -37,9 +24,15 @@ function Calendar({ id }) {
     return <p>Error: {error.message}</p>;
   }
 
-  const eventData = data.schedule.events;
+  const eventData = data.event;
 
-  const handleDateClick = (arg) => {
+  const formattedData = eventData.map((item) => ({
+    title: item.title,
+    start: item.startDate,
+    end: item.endDate,
+  }));
+
+  const addEvent = (arg) => {
     const title = prompt('Enter event title:');
     if (title) {
       const newEvent = { title, start: arg.date, end: arg.date };
@@ -47,8 +40,8 @@ function Calendar({ id }) {
     }
   };
 
-  const handleViewChange = (newView) => {
-    setView(newView);
+  const handleViewChange = (view) => {
+    setView(view);
   };
 
   return (
@@ -57,15 +50,15 @@ function Calendar({ id }) {
       <section className="calendar">
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
-          dateClick={handleDateClick}
-          initialView="timeGridDay"
+          dateClick={addEvent} // Call addEvent function on date click
+          initialView={currentView}
           headerToolbar={{
             left: 'prev,next',
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay',
           }}
           weekends={true}
-          events={eventData}
+          events={[...formattedData, ...events]} // Combine formattedData and events array for display
           slotDuration="01:00:00"
           slotLabelInterval={{ minutes: 60 }}
         />
@@ -76,3 +69,5 @@ function Calendar({ id }) {
 }
 
 export default Calendar;
+
+

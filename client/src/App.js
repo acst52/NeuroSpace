@@ -43,6 +43,7 @@ function App() {
   useEffect(() => {
     if (auth.loggedIn()) {
       const fetchedProfile = auth.getProfile();
+      console.log(fetchedProfile);
       setProfile(fetchedProfile);
     }
   }, []);

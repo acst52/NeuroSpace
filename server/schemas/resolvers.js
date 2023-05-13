@@ -12,6 +12,7 @@ const {
   Resource,
   Message,
   Donation,
+  Event
 } = require('../models');
 const { signToken } = require('../utils/auth');
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
@@ -54,6 +55,13 @@ const resolvers = {
       if (context.user) {
         const schedule = await Schedule.findById(_id);
         return schedule;
+      }
+      throw new AuthenticationError('Not logged in');
+    },
+    event: async (parent, { scheduleId }, context) => {
+      if (context.user) {
+        const events = await Event.find(scheduleId);
+        return events;
       }
       throw new AuthenticationError('Not logged in');
     },
@@ -167,6 +175,24 @@ const resolvers = {
           $push: { schedules: schedule },
         });
         return schedule;
+      }
+      throw new AuthenticationError('Not logged in');
+    },
+
+    createEvent: async (parent, { title, description, startDate, endDate, scheduleId }, context) => {
+      if (context.user) {
+        const event = await Event.create({
+          title,
+          description,
+          startDate,
+          endDate,
+          scheduleId,
+
+        });
+        await Schedule.findByIdAndUpdate(event.scheduleId, {
+          $push: { events: event },
+        });
+        return event;
       }
       throw new AuthenticationError('Not logged in');
     },

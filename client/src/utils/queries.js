@@ -34,3 +34,12 @@ query Schedules {
   }
   `;
 
+  export const EVENTQUERY = gql`
+  query Event {
+    event {
+      title
+      startDate
+      endDate
+    }
+  }
+  `;
