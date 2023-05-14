@@ -11,8 +11,9 @@ import { CREATEEVENT } from '../mutations';
 
 function Calendar({ id }) {
   console.log(id);
+  const scheduleId = id;
   const { loading, error, data } = useQuery(EVENTQUERY, {
-    variables: { id },
+    variables: { scheduleId },
   });
   const [createEvent] = useMutation(CREATEEVENT);
 
