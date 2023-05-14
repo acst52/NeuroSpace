@@ -43,7 +43,6 @@ useEffect(() => {
   const checkAuthentication = () => {
     if (auth.loggedIn()) {
       const fetchedProfile = auth.getProfile();
-      console.log(fetchedProfile);
       setProfile(fetchedProfile);
     } else {
       setProfile(null); // Reset the profile state when not logged in
