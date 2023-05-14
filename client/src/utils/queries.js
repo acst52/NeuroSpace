@@ -35,11 +35,12 @@ query Schedules {
   `;
 
   export const EVENTQUERY = gql`
-  query Event {
-    event {
-      title
-      startDate
+  query Event($scheduleId: ID) {
+    event(scheduleId: $scheduleId) {
+      description
       endDate
+      startDate
+      title
     }
   }
   `;

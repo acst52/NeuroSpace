@@ -39,14 +39,20 @@ const client = new ApolloClient({
 
 function App() {
   const [profile, setProfile] = useState(null);
-
-  useEffect(() => {
+useEffect(() => {
+  const checkAuthentication = () => {
     if (auth.loggedIn()) {
       const fetchedProfile = auth.getProfile();
       console.log(fetchedProfile);
       setProfile(fetchedProfile);
+    } else {
+      setProfile(null); // Reset the profile state when not logged in
     }
-  }, []);
+  };
+
+  checkAuthentication();
+
+}, []);
 
   return (
     <Elements stripe={stripePromise}>

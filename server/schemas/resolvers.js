@@ -12,7 +12,7 @@ const {
   Resource,
   Message,
   Donation,
-  Event
+  Event,
 } = require('../models');
 const { signToken } = require('../utils/auth');
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
@@ -53,12 +53,12 @@ const resolvers = {
     },
     schedule: async (parent, { _id }, context) => {
       if (context.user) {
-        const schedule = await Schedule.findById(_id);
-        return schedule;
+        return await Schedule.findById(_id);
       }
       throw new AuthenticationError('Not logged in');
     },
-    event: async (parent, { scheduleId }, context) => {
+    
+    event: async (parent, scheduleId, context) => {
       if (context.user) {
         const events = await Event.find(scheduleId);
         return events;
@@ -67,12 +67,8 @@ const resolvers = {
     },
 
     // add for msgs and donation
-    messages: async (parent, args, context) => {
-      if (context.user) {
-        const user = await User.findById(context.user._id);
-        return user.messages.id(_id);
-      }
-      throw new AuthenticationError('Not logged in');
+    messages: async () => {
+      return await Message.find();
     },
     message: async (parent, { _id }) => {
       return await Message.findById(_id);
@@ -175,24 +171,6 @@ const resolvers = {
           $push: { schedules: schedule },
         });
         return schedule;
-      }
-      throw new AuthenticationError('Not logged in');
-    },
-
-    createEvent: async (parent, { title, description, startDate, endDate, scheduleId }, context) => {
-      if (context.user) {
-        const event = await Event.create({
-          title,
-          description,
-          startDate,
-          endDate,
-          scheduleId,
-
-        });
-        await Schedule.findByIdAndUpdate(event.scheduleId, {
-          $push: { events: event },
-        });
-        return event;
       }
       throw new AuthenticationError('Not logged in');
     },
