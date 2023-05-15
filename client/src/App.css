@@ -65,7 +65,7 @@ button:hover {
 }
 /* used to make content lower then header */
 .contentBody {
-  margin-top:160px;
+  margin-top:40%;
 }
 
 .title {
@@ -137,6 +137,48 @@ button:hover {
   background-color: #f1f1f1;
 }
 
+/* donation button */
+
+.contentBody {
+  position: relative;
+  min-height: 75vh;
+}
+
+.contentBody > div:last-child {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.footer {
+  display:flex;
+  justify-content: center;
+}
+.ccInfo {
+  padding:2%;
+  width:100%;
+}
+.eventModal {
+  display: flex;
+  align-items: center;
+   flex-direction: column; 
+  justify-content: center;
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index:999999
+}
+.eventModalOverlay {
+  z-index: 999998; /* Ensure the modal appears above other elements */
+}
+.modalBtns {
+  display: flex;
+  flex-direction: row;
+}
 
 /* modal */
 .youtubeVideoContainer {
@@ -171,6 +213,12 @@ button:hover {
   color: white;
   border: none;
   cursor: pointer;
+}
+.donationTitle {
+  margin: 2%;
+}
+.fc-toolbar-title {
+  font-size: 12pt;
 }
 /* .modal {
   position: relative;
@@ -228,6 +276,17 @@ button:hover {
     height:fit-content;
     padding:2%;
   }
+
+  .contentBody {
+    margin-top:15vh;
+    position: relative;
+    min-height: 85vh;
+  }
+  .ccInfo {
+    padding:2%;
+    width:60%;
+  }
+ 
  /*  
 .youtubeVideoContainer{
   position: relative;
