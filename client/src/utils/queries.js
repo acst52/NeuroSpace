@@ -24,6 +24,7 @@ export const MESSAGESQUERY = gql`
   }
 `;
 
+
 export const SCHEDULESQUERY = gql`
 query Schedules {
     schedules {

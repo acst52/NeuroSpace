@@ -1,27 +1,33 @@
 // src/components/messages/MessageForm.js
 
 import React, { useState } from 'react';
+import {CREATEMESSAGE } from '../../mutations';
+import { useQuery, useMutation} from '@apollo/client';
+// import {addMessage} from '../../mutations'
 
-const MessageForm = ({ onSubmit }) => {
+const MessageForm = () => {
   const [content, setContent] = useState('');
+  const [addMessage] = useMutation(CREATEMESSAGE);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     if (content.trim() !== '') {
-      onSubmit(content);
-      setContent('');
+      const addedMessage = await CREATEMESSAGE(content);
+    setContent(prevMessages => [...prevMessages, addedMessage]);
+    setContent("")
+
     }
   };
 
   return (
-    <form className="message-form" onSubmit={handleSubmit}>
+    <form className="message-form" >
       <input
         type="text"
         placeholder="Type your message here..."
         value={content}
         onChange={(e) => setContent(e.target.value)}
       />
-      <button type="submit">Send</button>
+      <button type="submit" onClick={handleSubmit}>Send</button>
     </form>
   );
 };

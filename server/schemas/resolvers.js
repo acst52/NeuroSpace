@@ -230,7 +230,17 @@ const resolvers = {
     //     deleteDonation: async (parent, { _id }) => {
     //       return await Donation.findOneAndDelete({ _id });
     //     },
-
+     addMessage: async (_, { content }, context) => {
+      console.log(context);
+      if (context.user) {
+        const newMessage = new Message({ content });
+        await User.findByIdAndUpdate(context.user._id, {
+          $push: { messages: newMessage },
+        });
+        return newMessage;
+      }
+      throw new AuthenticationError('Not logged in');
+    },
     addOrder: async (parent, { donations }, context) => {
       console.log(context);
       if (context.user) {
