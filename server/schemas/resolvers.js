@@ -12,6 +12,7 @@ const {
   Resource,
   Message,
   Donation,
+  Event,
 } = require('../models');
 const { signToken } = require('../utils/auth');
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
@@ -53,6 +54,14 @@ const resolvers = {
     schedule: async (parent, { _id }, context) => {
       if (context.user) {
         return await Schedule.findById(_id);
+      }
+      throw new AuthenticationError('Not logged in');
+    },
+    
+    event: async (parent, scheduleId, context) => {
+      if (context.user) {
+        const events = await Event.find(scheduleId);
+        return events;
       }
       throw new AuthenticationError('Not logged in');
     },
@@ -165,6 +174,37 @@ const resolvers = {
       }
       throw new AuthenticationError('Not logged in');
     },
+    createEvent: async (parent, { title, description, startDate, endDate, scheduleId, attendees }, context) => {
+      if (context.user) {
+        const event = await Event.create({
+          title,
+          description,
+          startDate,
+          endDate,
+          scheduleId,
+          attendees,
+
+        });
+        if (attendees && attendees.length > 0) {
+          for (const attendeeId of attendees) {
+            const user = await User.findById(attendeeId);
+            if (user && user.schedules && user.schedules.length > 0) {
+              console.log(user.schedules[0].id); // Access the first schedule of the user
+              const scheduleIdAttendee = user.schedules[0].id;
+              await Schedule.findByIdAndUpdate(scheduleIdAttendee, {
+                $push: { events: event },  
+              });
+            }
+          }
+        }
+        await Schedule.findByIdAndUpdate(event.scheduleId, {
+          $push: { events: event },
+        });
+        return event;
+      }
+      throw new AuthenticationError('Not logged in');
+    },
+
 
     // addUserToSchedule - typeDef: addUserToSchedule(scheduleId: ID!): Schedule
     addCollaboratorToSchedule: async (_, { scheduleId, userId }, { user }) => {

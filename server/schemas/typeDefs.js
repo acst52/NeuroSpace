@@ -37,23 +37,23 @@ const typeDefs = gql`
   type Schedule {
     _id: ID!
     weekStartDate: String!
-    events: [Event]!
+    events: [Event]
     owner: User!
     collaborator: User
   }
 
   type Event {
-    title: String
+    title: String!
     description: String
-    startDate: String
-    endDate: String
-    attendees: [User]!
+    startDate: String!
+    endDate: String!
+    attendees: [User]
   }
 
   type Message {
     _id: ID!
     sender: User!
-    receiver: User!
+    recipient: User!
     content: String!
     createdAt: String!
   }
@@ -86,6 +86,7 @@ const typeDefs = gql`
     resources(category: ID, title: String): [Resource]
     resource(_id: ID!): Resource
     user: User
+    event(scheduleId: ID): [Event]
     schedules: [Schedule]
     schedule(_id: ID!): Schedule
     messages: [Message]
@@ -116,11 +117,12 @@ const typeDefs = gql`
     deleteSchedule(_id: ID!): Schedule
 
     createEvent(
-      scheduleId: ID!
-      title: String
+      title: String!
       description: String
-      startDate: String
-      endDate: String
+      startDate: String!
+      endDate: String!
+      scheduleId: ID!
+      attendees:[ID]
     ): Event
     updateEvent(eventId: ID!): Event
     deleteEvent(eventId: ID!): Event

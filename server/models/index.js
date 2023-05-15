@@ -4,6 +4,7 @@ const Donation = require('./Donation');
 const Message = require('./Message');
 const Resource = require('./Resource');
 const Schedule = require('./Schedule');
+const Event = require('./Event');
 
 module.exports = {
   User,
@@ -12,4 +13,5 @@ module.exports = {
   Message,
   Resource,
   Schedule,
+  Event
 };
