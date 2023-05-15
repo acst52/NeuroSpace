@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery, useMutation} from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { MESSAGESQUERY } from '../utils/queries';
 
 import Donation from './donation'

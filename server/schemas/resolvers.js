@@ -230,7 +230,7 @@ const resolvers = {
     //     deleteDonation: async (parent, { _id }) => {
     //       return await Donation.findOneAndDelete({ _id });
     //     },
-     addMessage: async (_, { content }, context) => {
+     createMessage: async (_, { content }, context) => {
       console.log(context);
       if (context.user) {
         const newMessage = new Message({ content });

@@ -57,4 +57,3 @@ mutation AddMessage($content: String!) {
 
 
   `
-;

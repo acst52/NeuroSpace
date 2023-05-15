@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import {CREATEMESSAGE } from '../../mutations';
-import { useQuery, useMutation} from '@apollo/client';
-// import {addMessage} from '../../mutations'
+import { useQuery, useMutation } from '@apollo/client';
+ import {addMessage} from '../../mutations'
 
 const MessageForm = () => {
   const [content, setContent] = useState('');
