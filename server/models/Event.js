@@ -24,7 +24,7 @@ const eventSchema = new Schema({
     },
     attendees: [{
         type: Schema.Types.ObjectId,
-      ref: 'User',
+        ref: 'User', // Reference the 'User' model
     }],
 
 },
