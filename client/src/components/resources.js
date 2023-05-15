@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Donation from "./donation"
 
 
 function Resources() {
@@ -9,6 +9,7 @@ function Resources() {
       <h1 className="title">DASHBOARD - Resources</h1>
       <section className = "resources">
       </section>
+      <Donation />
     </div>
   );
 }

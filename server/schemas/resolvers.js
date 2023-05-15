@@ -12,6 +12,7 @@ const {
   Resource,
   Message,
   Donation,
+  Event,
 } = require('../models');
 const { signToken } = require('../utils/auth');
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
@@ -53,6 +54,14 @@ const resolvers = {
     schedule: async (parent, { _id }, context) => {
       if (context.user) {
         return await Schedule.findById(_id);
+      }
+      throw new AuthenticationError('Not logged in');
+    },
+    
+    event: async (parent, scheduleId, context) => {
+      if (context.user) {
+        const events = await Event.find(scheduleId);
+        return events;
       }
       throw new AuthenticationError('Not logged in');
     },
