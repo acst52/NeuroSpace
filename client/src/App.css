@@ -154,6 +154,7 @@ button:hover {
 .footer {
   display:flex;
   justify-content: center;
+  z-index: 9999;
 }
 .ccInfo {
   padding:2%;
