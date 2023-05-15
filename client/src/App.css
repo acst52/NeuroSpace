@@ -178,7 +178,8 @@ button:hover {
 }
 .modalBtns {
   display: flex;
-  flex-direction: row;
+  flex-direction: row; 
+  margin: 1%;
 }
 
 /* modal */

@@ -131,10 +131,10 @@ function Calendar({ id }) {
         <h2>Enter event title:</h2>
         <input type="text"  id = "title"/>
         </div>
-        <div>
+        {/* <div>
         <h2>Attendees? </h2>
         <input type="email" id = "attendees" />
-        </div>
+        </div> */}
         <div className= "modalBtns">
         <button onClick={handleModalSubmit}>Submit</button>
         <button onClick={closeModal}>Cancel</button>
