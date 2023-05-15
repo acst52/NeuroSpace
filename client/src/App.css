@@ -159,6 +159,26 @@ button:hover {
   padding:2%;
   width:100%;
 }
+.eventModal {
+  display: flex;
+  align-items: center;
+   flex-direction: column; 
+  justify-content: center;
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index:999999
+}
+.eventModalOverlay {
+  z-index: 999998; /* Ensure the modal appears above other elements */
+}
+.modalBtns {
+  display: flex;
+  flex-direction: row;
+}
 
 /* modal */
 .youtubeVideoContainer {

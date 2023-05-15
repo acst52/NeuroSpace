@@ -4,6 +4,8 @@ import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@ap
 import { setContext } from '@apollo/client/link/context';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import Modal from 'react-modal';
+
 import Login from './components/loginForm';
 import SearchResources from './pages/searchResources';
 import Signup from './components/signupForm';
@@ -36,6 +38,8 @@ const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
+
+Modal.setAppElement('#root');
 
 function App() {
   const [profile, setProfile] = useState(null);

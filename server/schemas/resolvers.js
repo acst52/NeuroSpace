@@ -174,6 +174,37 @@ const resolvers = {
       }
       throw new AuthenticationError('Not logged in');
     },
+    createEvent: async (parent, { title, description, startDate, endDate, scheduleId, attendees }, context) => {
+      if (context.user) {
+        const event = await Event.create({
+          title,
+          description,
+          startDate,
+          endDate,
+          scheduleId,
+          attendees,
+
+        });
+        if (attendees && attendees.length > 0) {
+          for (const attendeeId of attendees) {
+            const user = await User.findById(attendeeId);
+            if (user && user.schedules && user.schedules.length > 0) {
+              console.log(user.schedules[0].id); // Access the first schedule of the user
+              const scheduleIdAttendee = user.schedules[0].id;
+              await Schedule.findByIdAndUpdate(scheduleIdAttendee, {
+                $push: { events: event },  
+              });
+            }
+          }
+        }
+        await Schedule.findByIdAndUpdate(event.scheduleId, {
+          $push: { events: event },
+        });
+        return event;
+      }
+      throw new AuthenticationError('Not logged in');
+    },
+
 
     // addUserToSchedule - typeDef: addUserToSchedule(scheduleId: ID!): Schedule
     addCollaboratorToSchedule: async (_, { scheduleId, userId }, { user }) => {

@@ -37,12 +37,14 @@ mutation CreateSchedule($weekStartDate: String!) {
 }
 `;
 export const CREATEEVENT = gql`
-mutation CreateEvent($title: String!, $startDate: String!, $endDate: String!, $scheduleId: ID!, $description: String) {
-  createEvent(title: $title, startDate: $startDate, endDate: $endDate, scheduleId: $scheduleId, description: $description) {
+mutation CreateEvent($title: String!, $startDate: String!, $endDate: String!, $scheduleId: ID!, $attendees: [ID]) {
+  createEvent(title: $title, startDate: $startDate, endDate: $endDate, scheduleId: $scheduleId, attendees: $attendees) {
     title
     startDate
     endDate
-    description
+    attendees {
+      email
+    }
   }
 }
 `;
