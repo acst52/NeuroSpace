@@ -174,6 +174,7 @@ const resolvers = {
       }
       throw new AuthenticationError('Not logged in');
     },
+    
     createEvent: async (parent, { title, description, startDate, endDate, scheduleId, attendees }, context) => {
       if (context.user) {
         const event = await Event.create({
