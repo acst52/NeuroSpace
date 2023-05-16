@@ -27,7 +27,7 @@ console.log(data)
     <div className='contentBody'>
       <h1 className="title">DASHBOARD - Messages</h1>
       <MessageForm/>
-      <InboxList/>
+      {/* <InboxList/> */}
       <section className = "messages">
       <ul>
         {messages.map((message) => (
