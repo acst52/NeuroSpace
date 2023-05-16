@@ -217,8 +217,11 @@ const resolvers = {
         if (event) {
           const scheduleId = context.user.scheduleId;
           // Remove the event from the related schedule
-          await Schedule.findByIdAndUpdate(scheduleId, {
-             $pull: { events: { _id: eventId } } },
+          await Schedule.findByIdAndUpdate(
+            scheduleId,
+            {
+              $pull: { events: { _id: eventId } },
+            },
             { new: true }
           );
 
@@ -234,7 +237,6 @@ const resolvers = {
       }
     },
 
-    // addCollaboratorToSchedule - typeDef: addUserToSchedule(scheduleId: ID!): Schedule
     addCollaboratorToSchedule: async (_, { scheduleId, userId }, { user }) => {
       if (!user) {
         throw new AuthenticationError(

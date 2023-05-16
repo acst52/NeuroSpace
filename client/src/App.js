@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -21,7 +26,7 @@ const stripeKey = process.env.REACT_APP_STRIPE_PUBLIC_KEY;
 const stripePromise = loadStripe(stripeKey);
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:3001/graphql',
+  uri: '/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -43,19 +48,18 @@ Modal.setAppElement('#root');
 
 function App() {
   const [profile, setProfile] = useState(null);
-useEffect(() => {
-  const checkAuthentication = () => {
-    if (auth.loggedIn()) {
-      const fetchedProfile = auth.getProfile();
-      setProfile(fetchedProfile);
-    } else {
-      setProfile(null); // Reset the profile state when not logged in
-    }
-  };
+  useEffect(() => {
+    const checkAuthentication = () => {
+      if (auth.loggedIn()) {
+        const fetchedProfile = auth.getProfile();
+        setProfile(fetchedProfile);
+      } else {
+        setProfile(null); // Reset the profile state when not logged in
+      }
+    };
 
-  checkAuthentication();
-
-}, []);
+    checkAuthentication();
+  }, []);
 
   return (
     <Elements stripe={stripePromise}>
@@ -70,7 +74,10 @@ useEffect(() => {
             <Route path="/signup" element={<Signup />} />
             <Route path="/messages" element={<Messages />} />
             {profile && (
-              <Route path="/schedule" element={<Calendar  id={profile.data.scheduleId} />} />
+              <Route
+                path="/schedule"
+                element={<Calendar id={profile.data.scheduleId} />}
+              />
             )}
             <Route path="/resources" element={<Resources />} />
             <Route path="/donate" element={<DonationForm />} />
@@ -82,4 +89,3 @@ useEffect(() => {
 }
 
 export default App;
-
