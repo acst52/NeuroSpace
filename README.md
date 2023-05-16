@@ -20,7 +20,7 @@ To use NeuroSpace, simply visit us at our Heroku-deployed app: [NeuroSpace](http
 
 ## Technologies
 
-**Front-End**: React framework, Vanilla CSS, 
+**Front-End**: React framework, Vanilla CSS
 
 **Back-End**: Node.js, Express, MongoDB, Mongoose, GraphQL, Apollo Server
 
