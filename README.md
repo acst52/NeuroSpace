@@ -8,7 +8,7 @@ By creating a space for neurodiverse education scheduling and resource sharing, 
 ## Table of Contents
 
 * [Usage](#usage)
-* [Technologies Used](#technologies used)
+* [Technologies](#technologies)
 * [Contributing](#contributing)
 * [Questions](#questions)
 
@@ -18,7 +18,7 @@ To use NeuroSpace, simply visit us here: [NeuroSpace](https://group-1-project-3.
 
 ![NeuroSpace](IMG AND LINK HERE)
 
-## Technologies Used
+## Technologies
 
 *** ADD HERE ***
 
