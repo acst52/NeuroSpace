@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -21,36 +21,6 @@ function Calendar({ id }) {
   const [events, setEvents] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedArg, setSelectedArg] = useState(null); // Added state for storing selected arg
-
-  const { loading, error, data } = useQuery(EVENTQUERY, {
-    variables: { scheduleId },
-  });
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
-
-  const eventData = data.event;
-  console.log(eventData);
-
-  const formattedData = eventData.map((item) => ({
-    id: item._id,
-    title: item.title,
-    start: new Date(parseInt(item.startDate)).toISOString(),
-    end: new Date(parseInt(item.endDate)).toISOString(),
-  }));
-
-  const openModal = (arg) => {
-    setSelectedArg(arg); // Store the selected arg in the state
-    setModalIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
 
   const handleModalSubmit = async (event) => {
     event.preventDefault();
@@ -84,6 +54,44 @@ function Calendar({ id }) {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  useEffect(() => {
+    handleModalSubmit();
+  });
+
+  // useEffect hook that rerenders the page every time the value of events changes.
+  // put handleModalSubmit in useEffect hook ..
+  // dependency array of useEffect hook: [events, createEvent, id, selectedArg, handleModalSubmit]
+
+  const { loading, error, data } = useQuery(EVENTQUERY, {
+    variables: { scheduleId },
+  });
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
+
+  const eventData = data.event;
+  console.log(eventData);
+
+  const formattedData = eventData.map((item) => ({
+    id: item._id,
+    title: item.title,
+    start: new Date(parseInt(item.startDate)).toISOString(),
+    end: new Date(parseInt(item.endDate)).toISOString(),
+  }));
+
+  const openModal = (arg) => {
+    setSelectedArg(arg); // Store the selected arg in the state
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
   };
 
   const test = [...formattedData, ...events];
