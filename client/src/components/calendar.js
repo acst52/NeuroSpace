@@ -31,14 +31,20 @@ function Calendar({ id }) {
   if (error) {
     return <p>Error: {error.message}</p>;
   }
-
+console.log(data)
   const eventData = data.event;
+
 
   const formattedData = eventData.map((item) => ({
     title: item.title,
-    start: item.startDate,
-    end: item.endDate,
+    start: new Date(parseInt(item.startDate)).toISOString(),
+    
+// "2023-05-28T00:00:00.000+00:00"
+// Mon Feb 19 55370 19:00:00 GMT
+    end: new Date(parseInt(item.endDate)).toISOString(),
   }));
+
+ // console.log(formattedData)
 
   const openModal = (arg) => {
     setSelectedArg(arg); // Store the selected arg in the state
@@ -66,11 +72,13 @@ function Calendar({ id }) {
         end: endDate,
       };
       setEvents([...events, newEvent]);
+
     }
 
     closeModal();
   };
-
+  const test = [...formattedData, ...events]
+  console.log(test);
   const handleDateSelect = (arg) => {
     if (arg.view.type === 'dayGridMonth') {
       calendarRef.current.getApi().changeView('timeGridDay');
@@ -87,12 +95,11 @@ function Calendar({ id }) {
 
   const handleEventClick = (arg) => {
     const { event } = arg;
-    const shouldEdit = window.confirm(`Do you want to edit "${event.title}"?`);
-    if (shouldEdit) {
-      // TODO: Perform edit action
-    } else {
+    const shouldDelete = window.confirm(`Do you want to delete "${event.title}"?`);
+    if (shouldDelete) {
+      console.log(event)
       // TODO: Perform delete action
-    }
+    } 
   };
 
   return (
@@ -113,7 +120,7 @@ function Calendar({ id }) {
           eventClick={handleEventClick}
           selectable={true}
           select={handleTimeSelect}
-          events={[...formattedData, ...events]}
+          events={test}
           slotDuration="01:00:00"
           slotLabelInterval={{ minutes: 60 }}
         />

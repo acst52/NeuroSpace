@@ -8,6 +8,7 @@ By creating a space for neurodiverse education scheduling and resource sharing, 
 ## Table of Contents
 
 * [Usage](#usage)
+* [Technologies](#technologies)
 * [Contributing](#contributing)
 * [Questions](#questions)
 
@@ -16,6 +17,10 @@ By creating a space for neurodiverse education scheduling and resource sharing, 
 To use NeuroSpace, simply visit us here: [NeuroSpace](https://group-1-project-3.herokuapp.com/). You will then be able to sign up, connect with other users, collaborate on your schedule, send direct messages to other users and explore resources tailored to your special needs.
 
 ![NeuroSpace](IMG AND LINK HERE)
+
+## Technologies
+
+*** ADD HERE ***
 
 ## Contributing
 
