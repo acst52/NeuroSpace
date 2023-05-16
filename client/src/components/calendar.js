@@ -15,7 +15,7 @@ function Calendar({ id }) {
   const scheduleId = id;
   const [createEvent] = useMutation(CREATEEVENT);
   const [deleteEvent] = useMutation(DELETEEVENT);
-  const calendarRef = useRef(null); // not getting set bc null. seems like events is still null (line 21)
+  const calendarRef = useRef(); // useRef allows you to make changes to the calendar without re-rendering the page - holds ref to status/state of calendar
 
   const [currentView, setView] = useState('dayGridMonth');
   const [events, setEvents] = useState([]);
