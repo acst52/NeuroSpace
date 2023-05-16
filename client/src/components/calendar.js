@@ -81,6 +81,8 @@ function Calendar({ id }) {
     closeModal();
   };
 
+  const test = [...formattedData, ...events];
+
   const handleDateSelect = (arg) => {
     if (arg.view.type === 'dayGridMonth') {
       calendarRef.current.getApi().changeView('timeGridDay');
