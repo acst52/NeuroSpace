@@ -24,13 +24,13 @@ To use NeuroSpace, simply visit us at our Heroku-deployed app: [NeuroSpace](http
 
 **Back-End**: Node.js, Express, MongoDB, Mongoose, GraphQL, Apollo Server
 
-**Authentication & Authorization**: JWT
+**Authentication & Authorization**: [JWT](https://jwt.io/introduction)
 
-**Payment Integration**: Stripe
+**Payment Integration**: [Stripe](https://stripe.com/docs)
 
 **Deployment**: Heroku @ [NeuroSpace](https://group-1-project-3.herokuapp.com/)
 
-**Additional Libraries**: ESLint, fullCalendar
+**Additional Libraries**: ESLint, [fullCalendar](https://www.npmjs.com/package/fullcalendar)
 
 ## Contributing
 
