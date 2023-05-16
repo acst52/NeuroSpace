@@ -41,6 +41,9 @@ query Schedules {
       endDate
       startDate
       title
+      attendees {
+        _id
+      }
     }
   }
   `;
