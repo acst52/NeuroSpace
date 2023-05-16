@@ -28,7 +28,7 @@ To use NeuroSpace, simply visit us at our Heroku-deployed app: [NeuroSpace](http
 
 **Payment Integration**: Stripe
 
-**Deployment**: Heroku: [NeuroSpace](https://group-1-project-3.herokuapp.com/)
+**Deployment**: Heroku @ [NeuroSpace](https://group-1-project-3.herokuapp.com/)
 
 **Additional Libraries**: ESLint, fullCalendar
 
