@@ -70,7 +70,7 @@ useEffect(() => {
             <Route path="/signup" element={<Signup />} />
             <Route path="/messages" element={<Messages />} />
             {profile && (
-              <Route path="/schedule" element={<Calendar id={profile.data.scheduleId} />} />
+              <Route path="/schedule" element={<Calendar  id={profile.data.scheduleId} />} />
             )}
             <Route path="/resources" element={<Resources />} />
             <Route path="/donate" element={<DonationForm />} />
