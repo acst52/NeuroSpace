@@ -67,7 +67,7 @@ Open a pull request on GitHub, providing a clear description of your changes and
 
 Before reporting a bug or requesting a new feature, search the existing issues to avoid duplicates. Please use the following template to report your issue. It helps us understand your problem and reduce the time it takes to address it.
 
-### Issue Reporting Template
+*Issue Reporting Template*
 
 **Title:** A concise, descriptive title.
 
