@@ -58,10 +58,11 @@ const resolvers = {
       throw new AuthenticationError('Not logged in');
     },
     
-    event: async (parent, scheduleId, context) => {
+    event: async (parent, {scheduleId}, context) => {
       if (context.user) {
-        const events = await Event.find(scheduleId);
-        return events;
+        const schedule = await Schedule.findOne({_id:scheduleId}).populate("events")
+        console.log(schedule);
+        return schedule.events;
       }
       throw new AuthenticationError('Not logged in');
     },
