@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -8,15 +8,13 @@ import { useQuery, useMutation } from '@apollo/client';
 import Donation from './donation';
 
 import { EVENTQUERY } from '../utils/queries';
-import { CREATEEVENT } from '../mutations';
+import { CREATEEVENT, DELETEEVENT } from '../mutations';
 Modal.setAppElement('#root');
 
 function Calendar({ id }) {
   const scheduleId = id;
-  const { loading, error, data } = useQuery(EVENTQUERY, {
-    variables: { scheduleId },
-  });
   const [createEvent] = useMutation(CREATEEVENT);
+  const [deleteEvent] = useMutation(DELETEEVENT);
   const calendarRef = useRef(null);
 
   const [currentView, setView] = useState('dayGridMonth');
@@ -24,7 +22,10 @@ function Calendar({ id }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedArg, setSelectedArg] = useState(null); // Added state for storing selected arg
 
-  if (loading) {
+  const { loading, error, data } = useQuery(EVENTQUERY, {
+    variables: { scheduleId },
+  });
+   if (loading) {
     return <p>Loading...</p>;
   }
 
@@ -32,13 +33,15 @@ function Calendar({ id }) {
     return <p>Error: {error.message}</p>;
   }
 
-  const eventData = data.event;
+  const eventData = data.event ;
+console.log(eventData);
 
   const formattedData = eventData.map((item) => ({
+    id: item._id,
     title: item.title,
-    start: item.startDate,
-    end: item.endDate,
-  }));
+    start: new Date(parseInt(item.startDate)).toISOString(),
+    end: new Date(parseInt(item.endDate)).toISOString(),
+  })); 
 
   const openModal = (arg) => {
     setSelectedArg(arg); // Store the selected arg in the state
@@ -66,11 +69,11 @@ function Calendar({ id }) {
         end: endDate,
       };
       setEvents([...events, newEvent]);
+
     }
 
     closeModal();
   };
-
   const handleDateSelect = (arg) => {
     if (arg.view.type === 'dayGridMonth') {
       calendarRef.current.getApi().changeView('timeGridDay');
@@ -85,13 +88,26 @@ function Calendar({ id }) {
     }
   };
 
-  const handleEventClick = (arg) => {
+  const handleEventClick = async (arg) => {
     const { event } = arg;
-    const shouldEdit = window.confirm(`Do you want to edit "${event.title}"?`);
-    if (shouldEdit) {
-      // TODO: Perform edit action
-    } else {
-      // TODO: Perform delete action
+    console.log(event._def.publicId)
+    const shouldDelete = window.confirm(`Do you want to delete "${event.title}"?`);
+    if (shouldDelete) {
+      try {
+        // Perform delete action
+        const mutationResponse = await deleteEvent({
+          variables: { eventId: event._def.publicId }, // Pass the eventId as a variable
+        });
+
+        // Update the events state to reflect the deletion
+        setEvents([...events]);
+        // setEvents((prevEvents) =>
+        // prevEvents.filter((e) => e.id !== event._def.publicId)
+      // );
+      } catch (error) {
+        console.log('Error deleting event:', error);
+        // Handle any error that occurs during deletion
+      }
     }
   };
 
@@ -113,7 +129,7 @@ function Calendar({ id }) {
           eventClick={handleEventClick}
           selectable={true}
           select={handleTimeSelect}
-          events={[...formattedData, ...events]}
+           events={[...formattedData, ...events]}
           slotDuration="01:00:00"
           slotLabelInterval={{ minutes: 60 }}
         />

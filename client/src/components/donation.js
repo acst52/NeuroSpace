@@ -6,7 +6,7 @@ function Donation() {
 
   return (
     <div className='footer'>
-      <button><Link to="/donate" className="btnLink">Donate!</Link></button>
+      <button><Link to="/donate" className="btnLink" >Donate!</Link></button>
     </div>
   );
 }

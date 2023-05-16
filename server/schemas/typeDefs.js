@@ -43,6 +43,7 @@ const typeDefs = gql`
   }
 
   type Event {
+    _id:ID!
     title: String!
     description: String
     startDate: String!
@@ -122,7 +123,7 @@ const typeDefs = gql`
       startDate: String!
       endDate: String!
       scheduleId: ID!
-      attendees:[ID]
+      attendees: [ID]
     ): Event
     updateEvent(eventId: ID!): Event
     deleteEvent(eventId: ID!): Event
