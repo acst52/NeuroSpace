@@ -7,17 +7,9 @@ By creating a space for neurodiverse education scheduling and resource sharing, 
 
 ## Table of Contents
 
-* [Installation](#installation)
 * [Usage](#usage)
 * [Contributing](#contributing)
 * [Questions](#questions)
-
-## Installation
-
-To install necessary dependencies, run the following command:
-```
-npm i
-```
 
 ## Usage
 
@@ -50,7 +42,10 @@ For features: feature/short-feature-description
 For bug fixes: bugfix/short-bugfix-description
 
 5. Development Environment
-Install the required dependencies: npm i
+To install necessary dependencies, run the following command:
+```
+npm i
+```
 
 6. Commit Messages
 Write clear and concise commit messages describing the changes made. Use the imperative mood.
