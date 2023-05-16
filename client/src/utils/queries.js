@@ -25,18 +25,19 @@ export const MESSAGESQUERY = gql`
 `;
 
 export const SCHEDULESQUERY = gql`
-query Schedules {
+  query Schedules {
     schedules {
       owner {
         _id
       }
     }
   }
-  `;
+`;
 
-  export const EVENTQUERY = gql`
+export const EVENTQUERY = gql`
   query Event($scheduleId: ID) {
     event(scheduleId: $scheduleId) {
+      _id
       description
       endDate
       startDate
@@ -46,4 +47,6 @@ query Schedules {
       }
     }
   }
-  `;
+`;
+
+
