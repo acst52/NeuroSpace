@@ -67,11 +67,7 @@ Before reporting a bug or requesting a new feature, search the existing issues t
 
 A clear and concise description of what the issue is, including what you were doing when you encountered the issue.
 
-**Steps to reproduce:**
-
-1.
-2.
-3.
+**Steps to reproduce:** 1., 2., 3.
 
 **Expected behavior:**
 
