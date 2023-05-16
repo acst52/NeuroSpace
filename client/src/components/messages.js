@@ -3,7 +3,8 @@ import { useQuery, useMutation } from '@apollo/client';
 import { MESSAGESQUERY } from '../utils/queries';
 
 import Donation from './donation'
-import MessageForm from './messages/messageForm';
+import MessageForm from './Messages/messageForm';
+import InboxList from './Messages/inbox';
 
 
 function Messages() {
@@ -26,6 +27,7 @@ console.log(data)
     <div className='contentBody'>
       <h1 className="title">DASHBOARD - Messages</h1>
       <MessageForm/>
+      <InboxList/>
       <section className = "messages">
       <ul>
         {messages.map((message) => (
