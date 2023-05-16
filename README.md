@@ -9,7 +9,6 @@ By creating a space for neurodiverse education scheduling and resource sharing, 
 
 * [Installation](#installation)
 * [Usage](#usage)
-* [License](#license)
 * [Contributing](#contributing)
 * [Questions](#questions)
 
@@ -25,10 +24,6 @@ npm i
 To use NeuroSpace, simply visit us here: [NeuroSpace](https://group-1-project-3.herokuapp.com/). You will then be able to sign up, connect with other users, collaborate on your schedule, send direct messages to other users and explore resources tailored to your special needs.
 
 ![NeuroSpace](IMG AND LINK HERE)
-
-## License
-
-This project is licensed under the MIT license.
 
 ## Contributing
 
