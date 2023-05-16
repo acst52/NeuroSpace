@@ -14,17 +14,27 @@ By creating a space for neurodiverse education scheduling and resource sharing, 
 
 ## Usage
 
-To use NeuroSpace, simply visit us here: [NeuroSpace](https://group-1-project-3.herokuapp.com/). You will then be able to sign up, connect with other users, collaborate on your schedule, send direct messages to other users and explore resources tailored to your special needs.
+To use NeuroSpace, simply visit us at our Heroku-deployed app: [NeuroSpace](https://group-1-project-3.herokuapp.com/). You will then be able to sign up, connect with other users, collaborate on your schedule, send direct messages and explore resources tailored to your special needs.
 
 ![NeuroSpace](IMG AND LINK HERE)
 
 ## Technologies
 
-*** ADD HERE ***
+**Front-End**: React framework, Vanilla CSS, 
+
+**Back-End**: Node.js, Express, MongoDB, Mongoose, GraphQL, Apollo Server
+
+**Authentication & Authorization**: JWT
+
+**Payment Integration**: Stripe
+
+**Deployment**: Heroku: [NeuroSpace](https://group-1-project-3.herokuapp.com/)
+
+**Additional Libraries**: ESLint, fullCalendar
 
 ## Contributing
 
-### Contribution Guidelines
+*Contribution Guidelines*
 
 Thank you for considering contributing to our project! We welcome and appreciate your help. Please follow these guidelines to make the contribution process smooth and efficient for everyone involved.
 
@@ -114,7 +124,7 @@ Contributors will be recognized in the CONTRIBUTORS.md file and in the project's
 
 11. Communication
 
-Join our [GitHub Discussion - coming soon]() to ask questions and discuss the project.
+Join our {GitHub Discussion - coming soon} to ask questions and discuss the project.
 
 Thank you for contributing! We look forward to working together to improve this project.
 
