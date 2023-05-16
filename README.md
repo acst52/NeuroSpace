@@ -66,8 +66,6 @@ Before reporting a bug or requesting a new feature, search the existing issues t
 
 ### Issue Reporting Template
 
----
-
 **Title:** A concise, descriptive title.
 
 **Description:**
@@ -79,7 +77,6 @@ A clear and concise description of what the issue is, including what you were do
 1.
 2.
 3.
-...
 
 **Expected behavior:**
 
@@ -100,8 +97,6 @@ Relevant operating system, software and version information.
 **Additional context:**
 
 Add any other context about the problem here.
-
----
 
 Remember, the more information you provide, the easier it is for us to verify and resolve the issue. Thank you for your contribution!
 
