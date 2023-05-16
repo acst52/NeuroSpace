@@ -12,12 +12,15 @@ const MessageForm = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     if (content.trim() !== '') {
-      const addedMessage = await CREATEMESSAGE(content);
+      const addedMessage = await addMessage({
+        variables: {content}
+    });
     setContent(prevMessages => [...prevMessages, addedMessage]);
     setContent("")
 
     }
   };
+ 
 
   return (
     <form className="message-form" >
@@ -33,3 +36,4 @@ const MessageForm = () => {
 };
 
 export default MessageForm;
+
