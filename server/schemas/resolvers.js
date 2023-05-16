@@ -176,6 +176,7 @@ const resolvers = {
       }
       throw new AuthenticationError('Not logged in');
     },
+
     createEvent: async (
       parent,
       { title, description, startDate, endDate, scheduleId, attendees },
@@ -208,6 +209,7 @@ const resolvers = {
       }
       throw new AuthenticationError('Not logged in');
     },
+
     deleteEvent: async (_, { eventId }, context) => {
       if (context.user) {
         const event = await Event.findById(eventId);
@@ -232,7 +234,7 @@ const resolvers = {
       }
     },
 
-    // addUserToSchedule - typeDef: addUserToSchedule(scheduleId: ID!): Schedule
+    // addCollaboratorToSchedule - typeDef: addUserToSchedule(scheduleId: ID!): Schedule
     addCollaboratorToSchedule: async (_, { scheduleId, userId }, { user }) => {
       if (!user) {
         throw new AuthenticationError(
@@ -253,11 +255,7 @@ const resolvers = {
 
     // deleteSchedule
 
-    // createEvent
-
     // updateEvent
-
-    // deleteEvent
 
     // addUserToEvent
 
