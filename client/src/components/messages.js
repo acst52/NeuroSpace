@@ -2,10 +2,11 @@ import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { MESSAGESQUERY } from '../utils/queries';
 
+
 import Donation from './donation';
 import MessageForm from './messages/messageForm';
 import InboxList from './messages/inbox';
-
+import SendBox from './messages/outbox';
 
 function Messages() {
   const { loading, error, data } = useQuery(MESSAGESQUERY);
@@ -27,8 +28,9 @@ console.log(data)
     <div className='contentBody'>
       <h1 className="title">DASHBOARD - Messages</h1>
       <MessageForm/>
-      {/* <InboxList/> */}
-      <section className = "messages">
+       {/* <InboxList/>  */}
+      
+     <section className = "messages">
       <ul>
         {messages.map((message) => (
           <li key={message._id}>{message.content}</li>
