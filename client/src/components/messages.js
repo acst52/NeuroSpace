@@ -5,8 +5,8 @@ import { MESSAGESQUERY } from '../utils/queries';
 
 import Donation from './donation';
 import MessageForm from './messages/messageForm';
-import InboxList from './messages/inbox';
-import SendBox from './messages/outbox';
+// import InboxList from './messages/inbox';
+// import SendBox from './messages/outbox';
 
 function Messages() {
   const { loading, error, data } = useQuery(MESSAGESQUERY);
