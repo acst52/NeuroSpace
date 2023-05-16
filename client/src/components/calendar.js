@@ -52,33 +52,38 @@ function Calendar({ id }) {
     setModalIsOpen(false);
   };
 
-  const handleModalSubmit = async () => {
-    const title = document.querySelector('input[type="text"]').value;
-    const attendee = document.querySelector('input[type="email"]').value;
-    if (title && selectedArg) {
-      const startDate = selectedArg.startStr;
-      const endDate = selectedArg.endStr;
-      const description = '';
-      const scheduleId = id;
-      const mutationResponse = await createEvent({
-        variables: {
-          title,
-          startDate,
-          endDate,
-          scheduleId,
-          description,
-          attendee,
-        },
-      }).then((response) => {
+  const handleModalSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const title = document.querySelector('input[type="text"]').value;
+      const attendee = document.querySelector('input[type="email"]').value;
+      if (title && selectedArg) {
+        const startDate = selectedArg.startStr;
+        const endDate = selectedArg.endStr;
+        const description = '';
+        const scheduleId = id;
+        const mutationResponse = await createEvent({
+          variables: {
+            title,
+            startDate,
+            endDate,
+            scheduleId,
+            description,
+            attendee,
+          },
+        });
+        // .then((response) => {
         const newEvent = {
-          title: response.title,
-          startDate: response.startDate,
-          endDate: response.endDate,
+          title: mutationResponse.title,
+          startDate: mutationResponse.startDate,
+          endDate: mutationResponse.endDate,
         };
         setEvents([...events, newEvent]);
-      });
+      }
+      closeModal();
+    } catch (error) {
+      console.log(error);
     }
-    closeModal();
   };
 
   const test = [...formattedData, ...events];

@@ -125,6 +125,7 @@ const typeDefs = gql`
       scheduleId: ID!
       attendees: [ID]
     ): Event
+
     updateEvent(eventId: ID!): Event
     deleteEvent(eventId: ID!): Event
     addUserToEvent(eventId: ID!, userId: ID!): Event

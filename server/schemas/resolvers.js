@@ -4,6 +4,8 @@
 
 // ...and the Resolvers: queries are the R of CRUD operations, while the mutations are what you call in the front end (using the hook) to do the things and define how you want to do them, based on what args + what you have set to be returned in the typeDefs
 
+// context holds user info in Apollo Server
+
 const { AuthenticationError } = require('apollo-server-express');
 const {
   User,
