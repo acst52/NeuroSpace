@@ -57,7 +57,7 @@ const resolvers = {
       }
       throw new AuthenticationError('Not logged in');
     },
-    
+
     event: async (parent, scheduleId, context) => {
       if (context.user) {
         const events = await Event.find(scheduleId);
@@ -174,8 +174,12 @@ const resolvers = {
       }
       throw new AuthenticationError('Not logged in');
     },
-    
-    createEvent: async (parent, { title, description, startDate, endDate, scheduleId, attendees }, context) => {
+
+    createEvent: async (
+      parent,
+      { title, description, startDate, endDate, scheduleId, attendees },
+      context
+    ) => {
       if (context.user) {
         const event = await Event.create({
           title,
@@ -184,7 +188,6 @@ const resolvers = {
           endDate,
           scheduleId,
           attendees,
-
         });
         if (attendees && attendees.length > 0) {
           for (const attendeeId of attendees) {
@@ -193,7 +196,7 @@ const resolvers = {
               console.log(user.schedules[0].id); // Access the first schedule of the user
               const scheduleIdAttendee = user.schedules[0].id;
               await Schedule.findByIdAndUpdate(scheduleIdAttendee, {
-                $push: { events: event },  
+                $push: { events: event },
               });
             }
           }
@@ -206,8 +209,7 @@ const resolvers = {
       throw new AuthenticationError('Not logged in');
     },
 
-
-    // addUserToSchedule - typeDef: addUserToSchedule(scheduleId: ID!): Schedule
+    // addCollaboratorToSchedule - typeDef: addUserToSchedule(scheduleId: ID!): Schedule
     addCollaboratorToSchedule: async (_, { scheduleId, userId }, { user }) => {
       if (!user) {
         throw new AuthenticationError(
