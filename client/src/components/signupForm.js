@@ -10,7 +10,7 @@ const SignupForm = () => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const weekStartDate = "2023-05-12T10:00:00";
+  const weekStartDate = '2023-05-12T10:00:00';
 
   // Invoke `useMutation()` hook to return a Promise-based function and data about the ADDUSER mutation
   const [addUser] = useMutation(ADDUSER);
@@ -28,7 +28,7 @@ const SignupForm = () => {
   };
 
   const handleCreateCalendar = async (event) => {
-   event.preventDefault();
+    event.preventDefault();
     const createScheduleRes = await createSchedule({
       variables: { weekStartDate },
     });
@@ -45,7 +45,6 @@ const SignupForm = () => {
       console.error('Error:', error);
     }
   };
-  
 
   return (
     <div className="contentBody">

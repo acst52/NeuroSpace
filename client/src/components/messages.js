@@ -2,9 +2,9 @@ import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { MESSAGESQUERY } from '../utils/queries';
 import Donation from './donation';
-import MessageForm from './Messages/messageForm';
-import InboxList from './Messages/inbox';
-import InboxMessages from './Messages/inbox';
+import MessageForm from './msgs/messageForm';
+import InboxList from './msgs/inbox';
+import InboxMessages from './msgs/inbox';
 
 function Messages() {
   const { loading, error, data } = useQuery(MESSAGESQUERY);

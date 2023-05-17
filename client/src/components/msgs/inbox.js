@@ -4,20 +4,19 @@ import React from 'react';
 // import { MESSAGESQUERY } from '../utils/queries';
 //这个是收消息的地方但我不知道怎么写
 function InboxMessages() {
+  //   //   const { loading, error, data } = useQuery(MESSAGESQUERY);
 
-//   //   const { loading, error, data } = useQuery(MESSAGESQUERY);
-    
-//   // console.log(data)
-    
-//   //   if (loading) {
-//   //     return <p>Loading...</p>;
-//   //   }
-  
-//   //   if (error) {
-//   //     return <p>Error: {error.message}</p>;
-//   //   }
-  
-//   //   const messages = data.messages;
+  //   // console.log(data)
+
+  //   //   if (loading) {
+  //   //     return <p>Loading...</p>;
+  //   //   }
+
+  //   //   if (error) {
+  //   //     return <p>Error: {error.message}</p>;
+  //   //   }
+
+  //   //   const messages = data.messages;
   return (
     <>
       <h1
@@ -44,6 +43,6 @@ function InboxMessages() {
 //       </div> */}
     </>
   );
-};
+}
 
 export default InboxMessages;
