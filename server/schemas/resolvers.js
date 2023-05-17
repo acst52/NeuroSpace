@@ -67,12 +67,16 @@ const resolvers = {
     },
 
     // add for msgs and donation
-    messages: async () => {
-      return await Message.find();
+    messages: async (parent, {}, context) => {
+      return await Message.find({
+        recipient:context.user._id
+      }).populate('sender').populate('recipient');
     },
     message: async (parent, { _id }) => {
-      return await Message.findById(_id);
-    },
+      return await Message.findById(_id)
+      .populate('sender')
+      .populate('recipient');
+  },
 
     users: async () => {
       return await User.find();
@@ -311,28 +315,28 @@ const resolvers = {
       // Once the message is created, it can then be pushed to the user. Via findOneAndUpdate method
       //So now the backend needs to take a recipient ID, then when it creates a message, the Sender User us updated and the message is pushed to the sendMessage field. And then the Recipient User is updated and pushed to the recieveMessage
 
-     createMessage: async (parent, { content}, context) => {
-            console.log(context.user)
-      if (context.user._id && context.recipient ) {
-      
-        const newMessage =  Message.create({ 
-          content,
-          // sender:context.user.sender._id,
-          // recipient:context.user.recipient._id,
-        });
-        console.log(newMessage)
-         await User.fineOneAndUpdate(
-          { _id: context.user.sender._id},
-          {$push: { Message: newMessage }},
-         )
-         await User.fineOneAndUpdate(
-          { _id: context.user.recipient._id},
-          {$push: { Message: newMessage }},
-         )
-        return newMessage;
-      }
-      throw new AuthenticationError('Not logged in');
-    },  
+      createMessage: async (parent, { content, recipient }, context) => {
+        if (context.user._id && recipient) {
+          const newMessage = await Message.create({
+            content,
+            sender: context.user._id,
+            recipient: recipient,
+          });
+  
+          const sendUser = await User.findById(context.user._id);
+          const sendUserMesid = sendUser.sentMessage;
+          await User.findByIdAndUpdate(context.user._id, {
+            sentMessage: [...sendUserMesid, newMessage._id],
+          });
+          const reUser = await User.findById(recipient);
+          const reUserMesid = reUser.receivedMessage;
+          await User.findByIdAndUpdate(recipient, {
+            receivedMessage: [...reUserMesid, newMessage._id],
+          });
+          return newMessage;
+        }
+        throw new AuthenticationError('Not logged in');
+      },
 
     // createMessage: async (_, { content }, context) => {
     //   console.log(context);

@@ -20,6 +20,19 @@ export const MESSAGESQUERY = gql`
     messages {
       _id
       content
+      sender {
+        email
+        firstName
+        _id
+        lastName
+      }
+      recipient {
+        _id
+        lastName
+        firstName
+        email
+      }
+      createdAt
     }
   }
 `;

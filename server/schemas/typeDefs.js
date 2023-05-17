@@ -136,7 +136,7 @@ const typeDefs = gql`
     createCheckoutSession(amount: Float!): Checkout
     recordDonation(amount: Float!): Donation
 
-    createMessage(content: String!): Message
+    createMessage(content: String!,recipient: String!): Message
     deleteMessage: Message
     createDonation: Donation
     Donation: Donation

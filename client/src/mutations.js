@@ -49,10 +49,9 @@ mutation CreateEvent($title: String!, $startDate: String!, $endDate: String!, $s
 }
 `;
 export const CREATEMESSAGE = gql`
-mutation AddMessage($content: String!) {
-  createMessage(content: $content) {
+mutation AddMessage($content: String!,$recipient: String!) {
+  createMessage(content: $content,recipient: $recipient) {
     _id
-    content
   }
 }
 
