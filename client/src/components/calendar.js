@@ -22,8 +22,8 @@ function Calendar({ id }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedArg, setSelectedArg] = useState(null); // Added state for storing selected arg
 
-  const handleModalSubmit = async (event) => {
-    event.preventDefault();
+  const handleModalSubmit = async () => {
+    // event.preventDefault();
     try {
       const title = document.querySelector('input[type="text"]').value;
       const attendee = document.querySelector('input[type="email"]').value;
@@ -62,7 +62,8 @@ function Calendar({ id }) {
 
   // useEffect hook that rerenders the page every time the value of events changes.
   // put handleModalSubmit in useEffect hook ..
-  // dependency array of useEffect hook: [events, createEvent, id, selectedArg, handleModalSubmit]
+  // dependency array of useEffect hook (might need): [events, createEvent, id, selectedArg, handleModalSubmit]
+  // events getting populated from db - but can't add new event live
 
   const { loading, error, data } = useQuery(EVENTQUERY, {
     variables: { scheduleId },
