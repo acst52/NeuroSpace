@@ -22,8 +22,8 @@ function Calendar({ id }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedArg, setSelectedArg] = useState(null); // Added state for storing selected arg
 
-  const handleModalSubmit = async () => {
-    // event.preventDefault();
+  const handleModalSubmit = async (event) => {
+    event.preventDefault();
     try {
       const title = document.querySelector('input[type="text"]').value;
       const attendee = document.querySelector('input[type="email"]').value;
