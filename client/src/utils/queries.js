@@ -24,6 +24,19 @@ export const MESSAGESQUERY = gql`
   }
 `;
 
+export const USERQUERY = gql`
+query GetUsers {
+  users {
+    _id
+    firstName
+    lastName
+    email
+    
+  }
+}
+`;
+
+
 
 export const SCHEDULESQUERY = gql`
 query Schedules {

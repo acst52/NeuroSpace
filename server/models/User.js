@@ -33,6 +33,16 @@ const userSchema = new Schema(
       required: true,
       minlength: 8, // set up pw validation & error msg***
     },
+    sentMessage:[{
+      type: Schema.Types.ObjectId,
+      ref: 'Message',
+
+    }],
+
+    receivedMessage:[{
+      type: Schema.Types.ObjectId,
+      ref: 'Message',
+    }],
     // ASSOCIATIONS - user can have many schedules (or just one?), resources, orders (orders be keeping track of donations ONLY), donations and msgs
     // ObjectId - wont give access to all. have to do array of schedule(etc) schemas
     schedules: [Schedule.schema],

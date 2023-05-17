@@ -15,13 +15,13 @@ const messageSchema = new Schema(
       // red to User model, stores senderId
       type: Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
+      // required: true,
     },
     recipient: {
       // ref to User model, stores recipientId
       type: Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
+      // required: true,
     },
   },
   {

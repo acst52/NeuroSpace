@@ -86,6 +86,7 @@ const typeDefs = gql`
     resources(category: ID, title: String): [Resource]
     resource(_id: ID!): Resource
     user: User
+    users:[User]
     event(scheduleId: ID): [Event]
     schedules: [Schedule]
     schedule(_id: ID!): Schedule

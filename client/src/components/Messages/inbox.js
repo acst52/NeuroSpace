@@ -1,21 +1,32 @@
-// src/components/messages/MessageForm.js
-// import React from 'react';
+// // src/components/messages/MessageForm.js
+import React from 'react';
+// import { useQuery, useMutation } from '@apollo/client';
+// import { MESSAGESQUERY } from '../utils/queries';
+//这个是收消息的地方但我不知道怎么写
+function InboxMessages() {
 
-// const InboxList = ({ messages = [] }) => {
-//   console.log(messages);
-//   if (!messages.length) {
-//     return <h3>No messages Yet</h3>;
-//   }
-
-//   return (
-//     <>
-//       <h3
-//         className="p-5 display-inline-block"
-//         style={{ borderBottom: '1px dotted #1a1a1a' }}
-//       >
-//         messages
-//       </h3>
-//       <div className="flex-row my-4">
+//   //   const { loading, error, data } = useQuery(MESSAGESQUERY);
+    
+//   // console.log(data)
+    
+//   //   if (loading) {
+//   //     return <p>Loading...</p>;
+//   //   }
+  
+//   //   if (error) {
+//   //     return <p>Error: {error.message}</p>;
+//   //   }
+  
+//   //   const messages = data.messages;
+  return (
+    <>
+      <h1
+        className="p-5 display-inline-block"
+        style={{ borderBottom: '1px dotted #1a1a1a' }}
+      >
+        Inbox messages
+      </h1>
+      {/* <div className="flex-row my-4">
 //         {messages &&
 //           messages.map((message) => (
 //             <div key={message._id} className="col-12 mb-3 pb-3">
@@ -26,13 +37,13 @@
 //                     on {message.createdAt}
 //                   </span>
 //                 </h5>
-//                 <p className="card-body">{message.messageText}</p>
+//                 <p className="card-body">{message.content}</p>
 //               </div>
 //             </div>
 //           ))}
-//       </div>
-//     </>
-//   );
-// };
+//       </div> */}
+    </>
+  );
+};
 
-// export default InboxList;
+export default InboxMessages;

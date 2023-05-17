@@ -74,6 +74,11 @@ const resolvers = {
       return await Message.findById(_id);
     },
 
+    users: async () => {
+      return await User.find();
+    },
+
+
     donations: async () => {
       return await Donation.find();
     },
@@ -154,6 +159,7 @@ const resolvers = {
 
     updateUser: async (parent, args, context) => {
       if (context.user) {
+        
         return await User.findByIdAndUpdate(context.user._id, args, {
           new: true,
         });
@@ -262,17 +268,84 @@ const resolvers = {
     //     deleteDonation: async (parent, { _id }) => {
     //       return await Donation.findOneAndDelete({ _id });
     //     },
-     createMessage: async (_, { content }, context) => {
-      console.log(context);
-      if (context.user) {
-        const newMessage = new Message({ content });
-        await User.findByIdAndUpdate(context.user._id, {
-          $push: { messages: newMessage },
+
+
+      // console.log(context);
+      // sentMessage: async (parent, {messageId,senderId}, context) => {
+      //   const sendMessage = await Message.findById(messageId)
+      //   if(!message){
+      //     throw new UserInputError('Message is not found!');
+      //   }
+      //   sendMessage.push(messageId)
+      //   sendMessage.sender.push(senderId)
+      //   await sendMessage.save()
+      
+      //   return sendMessage;
+      // },
+      
+      // receivedMessages: async () => {
+      //   return await Message.find();
+      // },
+      
+      // receivedMessage: async (parent, {messageId,recepientId,senderId}, context) => {
+      //   const receiveMessage = await Message.findById(messageId)
+      //   if(!message){
+      //     throw new UserInputError('Message is not found!');
+      //   }
+      //   receiveMessage.push(messageId)
+      //   receiveMessage.recepient.push(recepientId)
+      //   await receiveMessage.save()
+      
+      //   return receiveMessage;
+      // },
+
+              // await User.findOneAndUpdate(context.user.sender._id, {
+        //   $push: { Message: newMessage },
+
+        // });
+        // await User.findByIdAndUpdate(context.user.recipient._id, {
+        //   $push: { Message: newMessage },
+
+        // });
+
+      // Once the message is created, it can then be pushed to the user. Via findOneAndUpdate method
+      //So now the backend needs to take a recipient ID, then when it creates a message, the Sender User us updated and the message is pushed to the sendMessage field. And then the Recipient User is updated and pushed to the recieveMessage
+
+     createMessage: async (parent, { content}, context) => {
+            console.log(context.user)
+      if (context.user._id && context.recipient ) {
+      
+        const newMessage =  Message.create({ 
+          content,
+          // sender:context.user.sender._id,
+          // recipient:context.user.recipient._id,
         });
+        console.log(newMessage)
+         await User.fineOneAndUpdate(
+          { _id: context.user.sender._id},
+          {$push: { Message: newMessage }},
+         )
+         await User.fineOneAndUpdate(
+          { _id: context.user.recipient._id},
+          {$push: { Message: newMessage }},
+         )
         return newMessage;
       }
       throw new AuthenticationError('Not logged in');
-    },
+    },  
+
+    // createMessage: async (_, { content }, context) => {
+    //   console.log(context);
+    //   if (context.user) {
+    //     const newMessage = new Message({ content });
+    //     await User.findByIdAndUpdate(context.user._id, {
+    //       $push: { messages: newMessage },
+    //     });
+    //     return newMessage;
+    //   }
+    //   throw new AuthenticationError('Not logged in');
+    // },
+
     addOrder: async (parent, { donations }, context) => {
       console.log(context);
       if (context.user) {
