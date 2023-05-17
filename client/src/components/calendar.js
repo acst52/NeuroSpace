@@ -22,8 +22,8 @@ function Calendar({ id }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedArg, setSelectedArg] = useState(null); // Added state for storing selected arg
 
-  const handleModalSubmit = async (event) => {
-    event.preventDefault();
+  const handleModalSubmit = async () => {
+    // event.preventDefault();
     try {
       const title = document.querySelector('input[type="text"]').value;
       const attendee = document.querySelector('input[type="email"]').value;
@@ -44,17 +44,9 @@ function Calendar({ id }) {
         });
         // .then((response) => {
         const newEvent = {
-          // title: mutationResponse.title,
-          // startDate: mutationResponse.startDate,
-          // endDate: mutationResponse.endDate,
-          id: mutationResponse.data.createEvent._id,
-          title: mutationResponse.data.createEvent.title,
-          start: new Date(
-            parseInt(mutationResponse.data.createEvent.startDate)
-          ).toISOString(),
-          end: new Date(
-            parseInt(mutationResponse.data.createEvent.endDate)
-          ).toISOString(),
+          title: mutationResponse.title,
+          startDate: mutationResponse.startDate,
+          endDate: mutationResponse.endDate,
         };
         setEvents([...events, newEvent]);
       }
