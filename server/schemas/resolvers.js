@@ -71,12 +71,21 @@ const resolvers = {
     },
 
     // add for msgs and donation
-    messages: async () => {
-      return await Message.find();
+    messages: async (parent, {}, context) => {
+      return await Message.find({
+        recipient:context.user._id
+      }).populate('sender').populate('recipient');
     },
     message: async (parent, { _id }) => {
-      return await Message.findById(_id);
+      return await Message.findById(_id)
+      .populate('sender')
+      .populate('recipient');
+  },
+
+    users: async () => {
+      return await User.find();
     },
+
 
     donations: async () => {
       return await Donation.find();
@@ -158,6 +167,7 @@ const resolvers = {
 
     updateUser: async (parent, args, context) => {
       if (context.user) {
+        
         return await User.findByIdAndUpdate(context.user._id, args, {
           new: true,
         });
@@ -289,6 +299,83 @@ const resolvers = {
     //     deleteDonation: async (parent, { _id }) => {
     //       return await Donation.findOneAndDelete({ _id });
     //     },
+
+
+      // console.log(context);
+      // sentMessage: async (parent, {messageId,senderId}, context) => {
+      //   const sendMessage = await Message.findById(messageId)
+      //   if(!message){
+      //     throw new UserInputError('Message is not found!');
+      //   }
+      //   sendMessage.push(messageId)
+      //   sendMessage.sender.push(senderId)
+      //   await sendMessage.save()
+      
+      //   return sendMessage;
+      // },
+      
+      // receivedMessages: async () => {
+      //   return await Message.find();
+      // },
+      
+      // receivedMessage: async (parent, {messageId,recepientId,senderId}, context) => {
+      //   const receiveMessage = await Message.findById(messageId)
+      //   if(!message){
+      //     throw new UserInputError('Message is not found!');
+      //   }
+      //   receiveMessage.push(messageId)
+      //   receiveMessage.recepient.push(recepientId)
+      //   await receiveMessage.save()
+      
+      //   return receiveMessage;
+      // },
+
+              // await User.findOneAndUpdate(context.user.sender._id, {
+        //   $push: { Message: newMessage },
+
+        // });
+        // await User.findByIdAndUpdate(context.user.recipient._id, {
+        //   $push: { Message: newMessage },
+
+        // });
+
+      // Once the message is created, it can then be pushed to the user. Via findOneAndUpdate method
+      //So now the backend needs to take a recipient ID, then when it creates a message, the Sender User us updated and the message is pushed to the sendMessage field. And then the Recipient User is updated and pushed to the recieveMessage
+
+      createMessage: async (parent, { content, recipient }, context) => {
+        if (context.user._id && recipient) {
+          const newMessage = await Message.create({
+            content,
+            sender: context.user._id,
+            recipient: recipient,
+          });
+  
+          const sendUser = await User.findById(context.user._id);
+          const sendUserMesid = sendUser.sentMessage;
+          await User.findByIdAndUpdate(context.user._id, {
+            sentMessage: [...sendUserMesid, newMessage._id],
+          });
+          const reUser = await User.findById(recipient);
+          const reUserMesid = reUser.receivedMessage;
+          await User.findByIdAndUpdate(recipient, {
+            receivedMessage: [...reUserMesid, newMessage._id],
+          });
+          return newMessage;
+        }
+        throw new AuthenticationError('Not logged in');
+      },
+
+    // createMessage: async (_, { content }, context) => {
+    //   console.log(context);
+    //   if (context.user) {
+    //     const newMessage = new Message({ content });
+    //     await User.findByIdAndUpdate(context.user._id, {
+    //       $push: { messages: newMessage },
+    //     });
+    //     return newMessage;
+    //   }
+    //   throw new AuthenticationError('Not logged in');
+    // },
 
     addOrder: async (parent, { donations }, context) => {
       console.log(context);

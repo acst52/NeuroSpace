@@ -49,6 +49,7 @@ mutation CreateEvent($title: String!, $startDate: String!, $endDate: String!, $s
 }
 `;
 
+
 export const DELETEEVENT = gql`
 mutation DeleteEvent($eventId: ID!) {
   deleteEvent(eventId: $eventId) {
@@ -56,3 +57,13 @@ mutation DeleteEvent($eventId: ID!) {
   }
 }
 `;
+export const CREATEMESSAGE = gql`
+mutation AddMessage($content: String!,$recipient: String!) {
+  createMessage(content: $content,recipient: $recipient) {
+    _id
+  }
+}
+
+
+
+  `

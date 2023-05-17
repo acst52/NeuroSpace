@@ -20,9 +20,36 @@ export const MESSAGESQUERY = gql`
     messages {
       _id
       content
+      sender {
+        email
+        firstName
+        _id
+        lastName
+      }
+      recipient {
+        _id
+        lastName
+        firstName
+        email
+      }
+      createdAt
     }
   }
 `;
+
+export const USERQUERY = gql`
+query GetUsers {
+  users {
+    _id
+    firstName
+    lastName
+    email
+    
+  }
+}
+`;
+
+
 
 export const SCHEDULESQUERY = gql`
   query Schedules {
@@ -47,6 +74,4 @@ export const EVENTQUERY = gql`
       }
     }
   }
-`;
-
-
+  `;
