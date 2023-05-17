@@ -3,7 +3,7 @@
 
 ## Description
 
-By creating a space for neurodiverse education scheduling and resource sharing, we can provide our children with the tools and resources they need to thrive. This includes providing them with a single schedule where teachers, parents and medical professionals can collaborate on planning. Find information on therapies, social skills training, and educational resources tailored to unique, neurospicy needs. Raise awareness, empower individuals with Autism, and give back to the community.
+By creating a space for neurodiverse education scheduling and resource sharing, we can provide our children with the tools and resources they need to thrive. This includes providing them with a single schedule where teachers, parents and medical professionals can collaborate on planning. Find information on therapies, social skills training, and educational resources tailored to unique, neurospicy needs. Raise awareness, empower individuals with Autism, and give back to the community. All donations go directly to the Autism Foundation.
 
 ## Table of Contents
 
@@ -14,7 +14,7 @@ By creating a space for neurodiverse education scheduling and resource sharing, 
 
 ## Usage
 
-To use NeuroSpace, simply visit us at our Heroku-deployed app: [NeuroSpace](https://group-1-project-3.herokuapp.com/). You will then be able to sign up, connect with other users, collaborate on your schedule, send direct messages and explore resources tailored to your special needs.
+To use NeuroSpace, simply visit us at our Heroku-deployed app: [NeuroSpace](https://group-1-project-3.herokuapp.com/). You will then be able to sign up, connect with other users, collaborate on your schedule, send direct messages and explore resources tailored to your special needs. You can donate directly to the Autism Foundation after signing up - simply click "Donate" and choose your amount!
 
 ![NeuroSpace Calendar View](https://github.com/acst52/NeuroSpace/assets/116177485/e5332073-0599-493c-abec-b075a5b850ac) ![NeuroSpace Search Resource View](https://github.com/acst52/NeuroSpace/assets/116177485/c8f6fddb-76d8-467e-9fd7-03ea0dd25f39)
 
