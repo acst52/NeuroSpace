@@ -4,6 +4,8 @@
 
 // ...and the Resolvers: queries are the R of CRUD operations, while the mutations are what you call in the front end (using the hook) to do the things and define how you want to do them, based on what args + what you have set to be returned in the typeDefs
 
+// context holds user info in Apollo Server
+
 const { AuthenticationError } = require('apollo-server-express');
 const {
   User,
@@ -57,11 +59,13 @@ const resolvers = {
       }
       throw new AuthenticationError('Not logged in');
     },
-    
-    event: async (parent, scheduleId, context) => {
+
+    event: async (parent, { scheduleId }, context) => {
       if (context.user) {
-        const events = await Event.find(scheduleId);
-        return events;
+        const schedule = await Schedule.findOne({ _id: scheduleId }).populate(
+          'events'
+        );
+        return schedule.events;
       }
       throw new AuthenticationError('Not logged in');
     },
@@ -184,8 +188,12 @@ const resolvers = {
       }
       throw new AuthenticationError('Not logged in');
     },
-    
-    createEvent: async (parent, { title, description, startDate, endDate, scheduleId, attendees }, context) => {
+
+    createEvent: async (
+      parent,
+      { title, description, startDate, endDate, scheduleId, attendees },
+      context
+    ) => {
       if (context.user) {
         const event = await Event.create({
           title,
@@ -194,16 +202,14 @@ const resolvers = {
           endDate,
           scheduleId,
           attendees,
-
         });
         if (attendees && attendees.length > 0) {
           for (const attendeeId of attendees) {
             const user = await User.findById(attendeeId);
             if (user && user.schedules && user.schedules.length > 0) {
-              console.log(user.schedules[0].id); // Access the first schedule of the user
               const scheduleIdAttendee = user.schedules[0].id;
               await Schedule.findByIdAndUpdate(scheduleIdAttendee, {
-                $push: { events: event },  
+                $push: { events: event },
               });
             }
           }
@@ -216,8 +222,33 @@ const resolvers = {
       throw new AuthenticationError('Not logged in');
     },
 
+    deleteEvent: async (_, { eventId }, context) => {
+      if (context.user) {
+        const event = await Event.findById(eventId);
 
-    // addUserToSchedule - typeDef: addUserToSchedule(scheduleId: ID!): Schedule
+        if (event) {
+          const scheduleId = context.user.scheduleId;
+          // Remove the event from the related schedule
+          await Schedule.findByIdAndUpdate(
+            scheduleId,
+            {
+              $pull: { events: { _id: eventId } },
+            },
+            { new: true }
+          );
+
+          // Remove the event itself
+          await Event.findByIdAndDelete(eventId);
+
+          // return true; // Return a success status if the deletion is successful
+        } else {
+          throw new Error('Event not found');
+        }
+      } else {
+        throw new AuthenticationError('Not logged in');
+      }
+    },
+
     addCollaboratorToSchedule: async (_, { scheduleId, userId }, { user }) => {
       if (!user) {
         throw new AuthenticationError(
@@ -238,11 +269,7 @@ const resolvers = {
 
     // deleteSchedule
 
-    // createEvent
-
     // updateEvent
-
-    // deleteEvent
 
     // addUserToEvent
 

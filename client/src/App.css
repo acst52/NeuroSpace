@@ -154,6 +154,7 @@ button:hover {
 .footer {
   display:flex;
   justify-content: center;
+  z-index: 9999;
 }
 .ccInfo {
   padding:2%;
@@ -177,7 +178,8 @@ button:hover {
 }
 .modalBtns {
   display: flex;
-  flex-direction: row;
+  flex-direction: row; 
+  margin: 1%;
 }
 
 /* modal */

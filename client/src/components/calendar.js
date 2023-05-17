@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -8,22 +8,74 @@ import { useQuery, useMutation } from '@apollo/client';
 import Donation from './donation';
 
 import { EVENTQUERY } from '../utils/queries';
-import { CREATEEVENT } from '../mutations';
+import { CREATEEVENT, DELETEEVENT } from '../mutations';
 Modal.setAppElement('#root');
 
 function Calendar({ id }) {
   const scheduleId = id;
-  const { loading, error, data } = useQuery(EVENTQUERY, {
-    variables: { scheduleId },
-  });
   const [createEvent] = useMutation(CREATEEVENT);
-  const calendarRef = useRef(null);
+  const [deleteEvent] = useMutation(DELETEEVENT);
+  const calendarRef = useRef(); // useRef allows you to make changes to the calendar without re-rendering the page - holds ref to status/state of calendar
 
   const [currentView, setView] = useState('dayGridMonth');
   const [events, setEvents] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedArg, setSelectedArg] = useState(null); // Added state for storing selected arg
 
+  const handleModalSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const title = document.querySelector('input[type="text"]').value;
+      const attendee = document.querySelector('input[type="email"]').value;
+      if (title && selectedArg) {
+        const startDate = selectedArg.startStr;
+        const endDate = selectedArg.endStr;
+        const description = '';
+        const scheduleId = id;
+        const mutationResponse = await createEvent({
+          variables: {
+            title,
+            startDate,
+            endDate,
+            scheduleId,
+            description,
+            attendee,
+          },
+        });
+        // .then((response) => {
+        const newEvent = {
+          // title: mutationResponse.title,
+          // startDate: mutationResponse.startDate,
+          // endDate: mutationResponse.endDate,
+          id: mutationResponse.data.createEvent._id,
+          title: mutationResponse.data.createEvent.title,
+          start: new Date(
+            parseInt(mutationResponse.data.createEvent.startDate)
+          ).toISOString(),
+          end: new Date(
+            parseInt(mutationResponse.data.createEvent.endDate)
+          ).toISOString(),
+        };
+        setEvents([...events, newEvent]);
+      }
+      closeModal();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    handleModalSubmit();
+  });
+
+  // useEffect hook that rerenders the page every time the value of events changes.
+  // put handleModalSubmit in useEffect hook ..
+  // dependency array of useEffect hook (might need): [events, createEvent, id, selectedArg, handleModalSubmit]
+  // events getting populated from db - but can't add new event live
+
+  const { loading, error, data } = useQuery(EVENTQUERY, {
+    variables: { scheduleId },
+  });
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -33,11 +85,13 @@ function Calendar({ id }) {
   }
 
   const eventData = data.event;
+  console.log(eventData);
 
   const formattedData = eventData.map((item) => ({
+    id: item._id,
     title: item.title,
-    start: item.startDate,
-    end: item.endDate,
+    start: new Date(parseInt(item.startDate)).toISOString(),
+    end: new Date(parseInt(item.endDate)).toISOString(),
   }));
 
   const openModal = (arg) => {
@@ -49,27 +103,7 @@ function Calendar({ id }) {
     setModalIsOpen(false);
   };
 
-  const handleModalSubmit = async () => {
-    const title = document.querySelector('input[type="text"]').value;
-    const attendee = document.querySelector('input[type="email"]').value;
-    if (title && selectedArg) {
-      const startDate = selectedArg.startStr;
-      const endDate = selectedArg.endStr;
-      const description = '';
-      const scheduleId = id;
-      const mutationResponse = await createEvent({
-        variables: { title, startDate, endDate, scheduleId, description, attendee },
-      });
-      const newEvent = {
-        title,
-        start: startDate,
-        end: endDate,
-      };
-      setEvents([...events, newEvent]);
-    }
-
-    closeModal();
-  };
+  const test = [...formattedData, ...events];
 
   const handleDateSelect = (arg) => {
     if (arg.view.type === 'dayGridMonth') {
@@ -85,13 +119,28 @@ function Calendar({ id }) {
     }
   };
 
-  const handleEventClick = (arg) => {
+  const handleEventClick = async (arg) => {
     const { event } = arg;
-    const shouldEdit = window.confirm(`Do you want to edit "${event.title}"?`);
-    if (shouldEdit) {
-      // TODO: Perform edit action
-    } else {
-      // TODO: Perform delete action
+    console.log(event._def.publicId);
+    const shouldDelete = window.confirm(
+      `Do you want to delete "${event.title}"?`
+    );
+    if (shouldDelete) {
+      try {
+        // Perform delete action
+        const mutationResponse = await deleteEvent({
+          variables: { eventId: event._def.publicId }, // Pass the eventId as a variable
+        });
+
+        // Update the events state to reflect the deletion
+        setEvents([...events]);
+        // setEvents((prevEvents) =>
+        // prevEvents.filter((e) => e.id !== event._def.publicId)
+        // );
+      } catch (error) {
+        console.log('Error deleting event:', error);
+        // Handle any error that occurs during deletion
+      }
     }
   };
 
@@ -113,7 +162,7 @@ function Calendar({ id }) {
           eventClick={handleEventClick}
           selectable={true}
           select={handleTimeSelect}
-          events={[...formattedData, ...events]}
+          events={test}
           slotDuration="01:00:00"
           slotLabelInterval={{ minutes: 60 }}
         />
@@ -128,16 +177,16 @@ function Calendar({ id }) {
         appElement={document.getElementById('contentBody')}
       >
         <div>
-        <h2>Enter event title:</h2>
-        <input type="text"  id = "title"/>
+          <h2>Enter event title:</h2>
+          <input type="text" id="title" />
         </div>
         <div>
-        <h2>Attendees? </h2>
-        <input type="email" id = "attendees" />
+          <h2>Attendees? </h2>
+          <input type="email" id="attendees" />
         </div>
-        <div className= "modalBtns">
-        <button onClick={handleModalSubmit}>Submit</button>
-        <button onClick={closeModal}>Cancel</button>
+        <div className="modalBtns">
+          <button onClick={handleModalSubmit}>Submit</button>
+          <button onClick={closeModal}>Cancel</button>
         </div>
       </Modal>
     </div>
