@@ -20,7 +20,7 @@ function Calendar({ id }) {
   const [currentView, setView] = useState('dayGridMonth');
   const [events, setEvents] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedArg, setSelectedArg] = useState(null); // Added state for storing selected arg
+  const [selectedArg, setSelectedArg] = useState(); // Added state for storing selected arg
 
   const handleModalSubmit = async () => {
     // event.preventDefault();
@@ -154,7 +154,7 @@ function Calendar({ id }) {
           eventClick={handleEventClick}
           selectable={true}
           select={handleTimeSelect}
-          events={test}
+          events={[...formattedData, ...events]}
           slotDuration="01:00:00"
           slotLabelInterval={{ minutes: 60 }}
         />
