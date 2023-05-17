@@ -44,9 +44,17 @@ function Calendar({ id }) {
         });
         // .then((response) => {
         const newEvent = {
-          title: mutationResponse.title,
-          startDate: mutationResponse.startDate,
-          endDate: mutationResponse.endDate,
+          // title: mutationResponse.title,
+          // startDate: mutationResponse.startDate,
+          // endDate: mutationResponse.endDate,
+          id: mutationResponse.data.createEvent._id,
+          title: mutationResponse.data.createEvent.title,
+          start: new Date(
+            parseInt(mutationResponse.data.createEvent.startDate)
+          ).toISOString(),
+          end: new Date(
+            parseInt(mutationResponse.data.createEvent.endDate)
+          ).toISOString(),
         };
         setEvents([...events, newEvent]);
       }
